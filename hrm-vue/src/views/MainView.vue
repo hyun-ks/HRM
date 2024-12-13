@@ -70,6 +70,171 @@
         </ul>
     </div>
     <!--end Side bar-->
+
+    <!--start Main-->
+    <main class="w-[calc(100%-256px)] ml-64 bg-gray-50 min-h-screen"><!--뷰포트의 높이만큼 채우기-->
+        <div class="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5">
+            <button type="button" class="text-gray-600 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>  
+            </button>
+            <ul class="flex items-center text-sm font-bold ml-4">
+                <li class="mr-2">
+                    <a href="#" class=" text-gray-400 hover:text-gray-600">Dashboard</a>
+                </li>
+                <li class="text-gray-600 mr-2">/</li>
+                <li class="text-gray-600 mr-2">Analytics</li>
+            </ul>
+            <ul class="ml-auto flex items-center">
+                <li class="mr-2">
+                    <button type="button" class="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"><!--버튼클릭유무 확인활성화-->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>  
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                        </svg>      
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <!--start 3 bars-->
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
+                    <div class="text-sm font-medium text-gray-400">Attending Employee</div>
+                    <div class="flex items-center mt-3">
+                        <div class="w-full bg-gray-100 rounded-full h-4">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
+                        </div>
+                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
+                    </div>  
+                </div>
+                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
+                    <div class="text-sm font-medium text-gray-400">On vacation</div>
+                    <div class="flex items-center mt-3">
+                        <div class="w-full bg-gray-100 rounded-full h-4">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
+                        </div>
+                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
+                    </div>
+                </div>
+                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
+                    <div class="text-sm font-medium text-gray-400">Fired</div>
+                    <div class="flex items-center mt-3">
+                        <div class="w-full bg-gray-100 rounded-full h-4">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
+                        </div>
+                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
+                    </div>
+                </div>
+            </div>
+            <!--End 3 bars-->
+            <!--Recent Attending-->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white border border-gray-100 shadow-md shadow-black/10 p-6 rounded-md">
+                <div class="flex justify-between mb-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[540px]">
+                            <thead>
+                                <tr>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 rounded-tl-md rounded-bl-md">name</th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50">rank</th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 rounded-tr-md rounded-br-md">status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <div class="flex items-center">
+                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <div class="flex items-center">
+                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <div class="flex items-center">
+                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <div class="flex items-center">
+                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <div class="flex items-center">
+                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+    <!--end Main-->
+
 </div>
     
 </template>
