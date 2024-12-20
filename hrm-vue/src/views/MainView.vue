@@ -231,6 +231,7 @@
                 </div>
             </div>
             </div>
+            <button @click="getData" class="bg-blue-500">데이터호출</button>
         </div>
     </main>
     <!--end Main-->
@@ -238,3 +239,29 @@
 </div>
     
 </template>
+
+<script>
+import axios from 'axios'
+export default{
+    name: 'Main',
+    data(){
+        return{
+            result: []
+        }
+    },
+    methods: {
+        getData(){
+            axios
+            .get('http://localhost:8085/employee')
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        
+
+    }
+}
+</script>

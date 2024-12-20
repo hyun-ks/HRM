@@ -82,7 +82,7 @@
                     <a href="#" class=" text-gray-400 hover:text-gray-600">Dashboard</a>
                 </li>
                 <li class="text-gray-600 mr-2">/</li>
-                <li class="text-gray-600 mr-2">Employee</li>
+                <li class="text-gray-600 mr-2">Approval</li>
             </ul>
             <ul class="ml-auto flex items-center">
                 <li class="mr-2">
@@ -101,126 +101,39 @@
                 </li>
             </ul>
         </div>
-    
-    <!--employee table start-->
+
+         <!--Approval table start-->
     <div class="p-6">
         <div class="grid grid-cols-1">
             <div class="bg-white border border-gray-100 shadow-md shadow-black/10 p-6 rounded-md">
-            <div class="overflow-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr>
-                                    <th class=" text-white py-2 px-4 bg-gray-500 rounded-tl-md rounded-bl-md">
-                                        <div class="flex items-center justify-center">
-                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-black transition duration-150 ease-in-out">
-                                        </div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">pic</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">dept_no</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">ranknum</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">name</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">birth</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">gender</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">phone</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">address</div>
-                                    </th>   
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500 rounded-tr-md rounded-br-md">
-                                        <div class="flex items-center justify-center"></div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="row in result" v-bind:key="row.em_userid">
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center justify-center">
-                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-black transition duration-150 ease-in-out">
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center justify-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.dept_no }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.ranknum }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_name }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_birth }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_gender }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_phone }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_address }}</span>
-                                    </td>
-                                    <td>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                        </svg>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="overflow-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-[14px] font-bold text-white py-2 px-4 bg-gray-500 rounded-tl-md rounded-bl-md">
+                                        <div class="flex items-center justify-center">Employee</div>
+                                </th>
+                                <th class="text-[14px] font-bold text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">Vacation type</div>
+                                </th>
+                                <th class="text-[14px] font-bold text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">Start~End Date</div>
+                                </th>
+                                <th class="text-[14px] font-bold text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">Attachment</div>
+                                </th>
+                                <th class="text-[14px] font-bold text-white py-2 px-4 bg-gray-500 rounded-tr-md rounded-br-md">
+                                        <div class="flex items-center justify-center">Status</div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <!--employee table end-->
+    <!--Approval table end-->
     </main>
     </div>
 </template>
-
-<script>
-import axios from 'axios'
-export default{
-    name: 'Employee',
-    data(){
-        return{
-            result: []
-        }
-    },
-    created(){
-        this.getData()
-    },
-    methods: {
-        getData(){
-            axios
-            .get('http://localhost:8085/employee')
-            .then((response) => {
-                console.log(response)
-                this.result = response.data//response값으로받은 data를 result에저장
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
-        
-
-    }
-}
-</script>
-

@@ -11,7 +11,7 @@ public class UserDto {
    private int ranknum;
    private String em_name;
    private Date em_birth;
-   private int em_gender;
+   private String em_gender;
    private String em_phone;
    private String em_address;
    private String em_password;
