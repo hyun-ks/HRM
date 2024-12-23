@@ -2,6 +2,7 @@ package com.example.hrm.dto;
 
 import java.sql.Date;
 
+import jakarta.persistence.Lob;
 import lombok.Data;
 
 @Data
@@ -15,4 +16,9 @@ public class UserDto {
    private String em_phone;
    private String em_address;
    private String em_password;
+   private String em_position;
+   private String dept_name;
+
+   @Lob
+   private byte[] em_pics;
 }

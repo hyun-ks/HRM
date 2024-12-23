@@ -119,10 +119,10 @@
                                         <div class="flex items-center justify-center">pic</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">dept_no</div>
+                                        <div class="flex items-center justify-center">dept</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">ranknum</div>
+                                        <div class="flex items-center justify-center">position</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">name</div>
@@ -138,14 +138,17 @@
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">address</div>
-                                    </th>   
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">address</div>
+                                    </th> 
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500 rounded-tr-md rounded-br-md">
                                         <div class="flex items-center justify-center"></div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="row in result" v-bind:key="row.em_userid">
+                                <tr v-for="(row, index) in result" v-bind:key="row.em_userid" v-bind:class="{'bg-gray-100' : index % 2 === 0}"><!--index는 0부터시작 그래서 첫번째 행부터 영향받음-->
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
                                             <input type="checkbox" class="form-checkbox h-4 w-4 text-black transition duration-150 ease-in-out">
@@ -153,14 +156,14 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="" class="w-10 h-10 rounded-full object-cover black">
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.dept_no }}</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.dept_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.ranknum }}</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_position }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_name }}</span>
@@ -177,11 +180,15 @@
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_address }}</span>
                                     </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{  }}</span>
+                                    </td>
                                     <td>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                                         </svg>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -195,32 +202,31 @@
 </template>
 
 <script>
-import axios from 'axios'
-export default{
-    name: 'Employee',
-    data(){
-        return{
-            result: []
-        }
-    },
-    created(){
-        this.getData()
-    },
-    methods: {
-        getData(){
-            axios
-            .get('http://localhost:8085/employee')
-            .then((response) => {
-                console.log(response)
-                this.result = response.data//response값으로받은 data를 result에저장
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
-        
+import axios from 'axios';
 
+export default {
+  name: 'Employee',
+  data() {
+    return {
+      result: []    
+    };
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios
+        .get('http://localhost:8085/employee')
+        .then((response) => {
+          console.log(response)
+          this.result = response.data  
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
+  }
 }
 </script>
 
