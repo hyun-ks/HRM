@@ -9,31 +9,34 @@
 
         <ul class="mt-4">
             <li class="mb-1">
-                <a href="#" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
+                <router-link to="main" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
                     <span class="text-sm font-bold text-white ml-3">Home</span>
                       
-                </a>
+                </router-link>
             </li>
 
             <li class="mb-1">
-                <a href="#" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
+                <a @click="toggleDropdown" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                     </svg>                      
                     <span class="text-sm font-bold text-white ml-3">Employee</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4 ml-auto" id="dropdown">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                    </svg>     
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4 ml-auto" :class="{ 'rotate-90': isOpen }">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
                 </a>
-                <ul class="pl-9 mt-2 hidden" id="hide">
+                <ul class="pl-7 mt-2" :class="{ 'hidden': !isOpen }">
                     <li class="mb-3">
-                        <a href="#" class="circle">Attendance</a>
+                        <a href="#" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Attendance</a>
                     </li>
                     <li class="mb-3">
-                        <a href="#" class="circle">Member</a>
+                        <router-link to="Employee" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Member</router-link>
+                    </li>
+                    <li class="mb-3">
+                        <a href="#" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Employee Insert</a>
                     </li>
                 </ul>
             </li>
@@ -70,7 +73,6 @@
         </ul>
     </div>
     <!--end Side bar-->
-
     <!--start Main-->
     <main class="w-[calc(100%-256px)] ml-64 bg-gray-50 min-h-screen"><!--뷰포트의 높이만큼 채우기-->
         <div class="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5">
@@ -103,38 +105,37 @@
                 </li>
             </ul>
         </div>
+            
+
         <!--start 3 bars-->
         <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
-                    <div class="text-sm font-medium text-gray-400">Attending Employee</div>
-                    <div class="flex items-center mt-3">
-                        <div class="w-full bg-gray-100 rounded-full h-4">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
-                    </div>  
+                    <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                    </svg>
+                    <div class="text-lg font-bold text-gray-400">Total Employee</div>
+                    </div>
+                    <div class="text-2xl font-semibold pt-3">159</div>
                 </div>
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
-                    <div class="text-sm font-medium text-gray-400">On vacation</div>
-                    <div class="flex items-center mt-3">
-                        <div class="w-full bg-gray-100 rounded-full h-4">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
+                    <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                    </svg>
+                    <div class="text-lg font-bold text-gray-400">New Employee</div>
                     </div>
+                    <div class="text-2xl font-semibold pt-3">40</div>
                 </div>
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="text-2xl font-semibold">10/50</div><!--클릭하면 출근현황 알려주는 페이지로-->
-                    <div class="text-sm font-medium text-gray-400">Fired</div>
-                    <div class="flex items-center mt-3">
-                        <div class="w-full bg-gray-100 rounded-full h-4">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-600 ml-3">60%</span>
+                    <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                    </svg>
+                    <div class="text-lg font-bold text-gray-400">Resigned Employee</div>
                     </div>
+                    <div class="text-2xl font-semibold pt-3">20</div>
                 </div>
             </div>
             <!--End 3 bars-->
@@ -231,9 +232,8 @@
                 </div>
             </div>
             </div>
-            <button @click="getData" class="bg-blue-500">데이터호출</button>
         </div>
-    </main>
+        </main>
     <!--end Main-->
 
 </div>
@@ -246,6 +246,7 @@ export default{
     name: 'Main',
     data(){
         return{
+            isOpen: false,
             result: []
         }
     },
@@ -259,6 +260,9 @@ export default{
             .catch((error) => {
                 console.log(error)
             })
+        },
+        toggleDropdown(){
+            this.isOpen = !this.isOpen
         }
         
 

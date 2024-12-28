@@ -9,6 +9,6 @@ import com.example.hrm.dto.UserDto;
 
 @Mapper
 public interface UserDao {
-    @Select("select * from em_info natural join em_rank")
+    @Select("select * from em_info natural join em_rank natural join em_dept")
     List<UserDto> findAll();
 }

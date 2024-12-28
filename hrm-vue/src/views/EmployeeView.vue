@@ -1,6 +1,6 @@
 <template>
     <div>
-         <!--start Side bar-->
+    <!--start Side bar-->
     <div class="fixed left-0 top-0 w-64 h-full bg-gray-800 p-4">
         <a href="#" class="flex items-center pb-4 border-b border-b-gray-600">
             <img src="https://placehold.co/32*32" alt="" class="w-8 h-8 rounded object-cover">
@@ -9,31 +9,34 @@
 
         <ul class="mt-4">
             <li class="mb-1">
-                <a href="#" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
+                <router-link to="Main" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
                     <span class="text-sm font-bold text-white ml-3">Home</span>
                       
-                </a>
+                </router-link>
             </li>
 
             <li class="mb-1">
-                <a href="#" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
+                <a @click="toggleDropdown" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                     </svg>                      
                     <span class="text-sm font-bold text-white ml-3">Employee</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4 ml-auto" id="dropdown">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                    </svg>     
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4 ml-auto" :class="{ 'rotate-90': isOpen }">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
                 </a>
-                <ul class="pl-9 mt-2 hidden" id="hide">
+                <ul class="pl-7 mt-2" :class="{ 'hidden': !isOpen }">
                     <li class="mb-3">
-                        <a href="#" class="circle">Attendance</a>
+                        <a href="#" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Attendance</a>
                     </li>
                     <li class="mb-3">
-                        <a href="#" class="circle">Member</a>
+                        <router-link to="Employee" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Member</router-link>
+                    </li>
+                    <li class="mb-3">
+                        <router-link to="Empinsert" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Employee Insert</router-link>
                     </li>
                 </ul>
             </li>
@@ -156,7 +159,7 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
-                                            <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <img :src="(row.em_location)" alt="" class="w-10 h-10 rounded-full object-cover black">
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
@@ -181,7 +184,7 @@
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_address }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{  }}</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_location }}</span>
                                     </td>
                                     <td>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-4">
@@ -208,8 +211,9 @@ export default {
   name: 'Employee',
   data() {
     return {
+      isOpen : false,
       result: []    
-    };
+    }
   },
   created() {
     this.getData();
@@ -225,8 +229,11 @@ export default {
         .catch((error) => {
           console.log(error)
         })
-    }
+    },
+    toggleDropdown(){
+        this.isOpen = !this.isOpen
+    },
   }
-}
+  }
 </script>
 

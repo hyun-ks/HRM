@@ -21,4 +21,5 @@ public class UserDto {
 
    @Lob
    private byte[] em_pics;
+   private String em_location;
 }
