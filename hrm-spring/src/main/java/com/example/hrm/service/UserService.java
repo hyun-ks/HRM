@@ -14,4 +14,8 @@ public class UserService {
     public List<UserDto> findAll(){
         return uDao.findAll();
     }
+
+    public int insert(UserDto user_info){
+        return uDao.insert(user_info);
+    }
 }

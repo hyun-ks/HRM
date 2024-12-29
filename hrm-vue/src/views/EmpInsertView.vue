@@ -137,7 +137,7 @@
                     <hr class="my-4 border-gray-300">
 
                     <div class="relative">
-                        <input type="text" name="userid" placeholder="Employee Userid"
+                        <input type="text" name="em_userid" :placeholder="placeholderText.em_userid" :class="{ active: active.em_userid }" v-model="result.em_userid"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -147,8 +147,8 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="userid" placeholder="Employee Name"
-                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
+                        <input type="text" name="em_name" :placeholder="placeholderText.em_name" :class="{ active: active.em_name }"
+                            v-model="result.em_name" class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -157,8 +157,8 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="userid" placeholder="Employee Birth"
-                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
+                        <input type="text" name="em_birth" :placeholder="placeholderText.em_birth" :class="{ active: active.em_birth }"
+                            v-model="result.em_birth" class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -167,7 +167,8 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="userid" placeholder="Employee Phone Number"
+                        <input type="text" name="em_phone" :placeholder="placeholderText.em_phone"
+                            :class="{ active: active.em_phone }" v-model="result.em_phone"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -177,12 +178,24 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="userid" placeholder="Employee Address"
+                        <input type="text" name="em_address" placeholder="Employee Address"
+                            :class="{ active: active.em_address }" v-model="result.em_address"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                    </div>
+
+                    <div class="relative">
+                        <input type="text" name="em_password" :placeholder="placeholderText.em_password"
+                            :class="{ active: active.em_password }" v-model="result.em_password"
+                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6 absolute top-1/3 left-2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                         </svg>
                     </div>
 
@@ -192,26 +205,41 @@
                         <div class="text-black font-bold mb-2">Select Gender</div>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" value="male" id="male" class="w-4 h-4">
+                                <input type="radio" name="gender" id="male" v-bind:value="true" class="w-4 h-4">
                                 <label for="male" class="text-gray-700">Male</label>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" value="female" id="female" class="w-4 h-4">
+                                <input type="radio" name="gender" id="female" v-bind:value="false" class="w-4 h-4">
                                 <label for="female" class="text-gray-700">Female</label>
                             </div>
                         </div>
                     </div>
 
+                    <div class="form-group mb-2">
+                        <label for="rank" class="mr-2">직급 선택:</label>
+                        <select id="rank" name="rank" class="border-2">
+                            <option value="r1">사장</option>
+                            <option value="r2">부장</option>
+                            <option value="r3">차장</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dept" class="mr-2">부서 선택:</label>
+                        <select id="dept" name="dept" class="border-2">
+                            <option value="d1">인사팀</option>
+                            <option value="d2">개발팀</option>
+                            <option value="d3">마케팅팀</option>
+                        </select>
+                    </div>
+
                     <div class="text-center">
                         <button type="button"
-                            class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-400 hover:text-black transition duration-200 ease-in-out">
+                            class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-400 hover:text-black transition duration-200 ease-in-out"
+                            @click="save">
                             Submit
                         </button>
                     </div>
-
-
-
-
                 </div>
             </div>
         </main>
@@ -222,33 +250,65 @@
 
 <script>
 import axios from 'axios';
-
 export default {
-    name: 'Employee',
+    name: 'Empinsert',
     data() {
         return {
             isOpen: false,
-            result: []
+            result: {
+                em_userid: '', dept_no: '', ranknum: '', em_name: '', em_birth: '', em_gender: '',
+                em_phone: '', em_address: '', em_password: ''
+            },
+            active: { em_userid: false, em_name: false, em_birth: false, em_phone: false, em_address: false, em_password: false },
+            placeholderText: {em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth', 
+                em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
+            }
         }
     },
     created() {
-        this.getData();
     },
     methods: {
-        getData() {
-            axios
-                .get('http://localhost:8085/employee')
-                .then((response) => {
-                    console.log(response)
-                    this.result = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
         toggleDropdown() {
             this.isOpen = !this.isOpen
+        },
+        save() {
+            if(this.result.em_userid == ''){
+                this.active.em_userid = true
+                this.placeholderText.em_userid = 'Userid is Required'
+            }
+            if(this.result.em_name == ''){
+                this.active.em_name = true
+                this.placeholderText.em_name = 'Name is Required'
+            }
+            if(this.result.em_birth == ''){
+                this.active.em_birth = true
+                this.placeholderText.em_birth = 'Enter Birth Date'
+            }
+            if(this.result.em_phone == ''){
+                this.active.em_phone = true
+                this.placeholderText.em_phone = 'Enter Phone number'
+            }
+            if(this.result.em_password == ''){
+                this.active.em_password = true
+                this.placeholderText.em_password = 'Password is Required'
+            }
+            
+            console.log(this.result)
+
+            axios.post('http://localhost:8085/empinsert', this.result)
+            .then((response) => {
+                console.log(response)
+                
+            })
+            .catch((error) => console.log(error))
         }
+
     }
 }
 </script>
+
+<style scoped>
+.active::placeholder {
+    color:red;
+}
+</style>
