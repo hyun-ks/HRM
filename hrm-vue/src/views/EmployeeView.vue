@@ -159,7 +159,7 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
-                                            <img :src="(row.em_location)" alt="" class="w-10 h-10 rounded-full object-cover black">
+                                            <img :src="row.em_pics" alt="" class="w-10 h-10 rounded-full object-cover">
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
