@@ -142,9 +142,6 @@
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">address</div>
                                     </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">address</div>
-                                    </th> 
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500 rounded-tr-md rounded-br-md">
                                         <div class="flex items-center justify-center"></div>
                                     </th>
@@ -159,7 +156,11 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
-                                            <img :src="row.em_pics" alt="" class="w-10 h-10 rounded-full object-cover">
+                                            <img :src="getFullImagePath() + row.em_location" alt="" class="w-10 h-10 rounded-full object-cover">
+                                            <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="" class="w-10 h-10 rounded-full object-cover">
+
+                                
+                                            {{ console.log(getFullImagePath(row.em_location)) }}
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
@@ -182,9 +183,6 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_address }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_location }}</span>
                                     </td>
                                     <td>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-4">
@@ -233,6 +231,9 @@ export default {
     toggleDropdown(){
         this.isOpen = !this.isOpen
     },
+    getFullImagePath(fileName){
+       return `${process.env.BASE_IMAGE_PATH}${fileName}`
+    }
   }
   }
 </script>

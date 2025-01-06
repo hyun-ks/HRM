@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -40,14 +38,7 @@ public class DataController {
     @PostMapping("/empinsert")
     public int insertEmp(@RequestBody UserDto uDto) {        
         return uService.insert(uDto);
-    }
-
-    @GetMapping("/employee/{userId}")
-    public String getEmployeeImage(@PathVariable String userId) {
-        // BLOB 타입으로 저장된 이미지 데이터를 가져옴
-        return uService.getImageBase64(uDto.getEm_userid());
-    }
-    
+    }    
 
     @DeleteMapping("/empdelete")
     public void deleteemp(){

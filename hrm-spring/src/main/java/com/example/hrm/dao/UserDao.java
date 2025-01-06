@@ -16,7 +16,4 @@ public interface UserDao {
     @Insert("insert into em_info(em_userid, dept_no, ranknum, em_name, em_birth, em_gender, em_pics em_phone, em_address, em_password, em_location)"
     + "values(#{em_userid}, #{dept_no}, #{ranknum}, #{em_name}, #{em_birth}, #{em_gender}, #{em_pics}, #{em_phone}, #{em_address}, #{em_password}, #{em_location})")
     int insert(UserDto user_info);
-
-    @Select("select em_pics from em_info where em_userid = #{em_userid}")
-    byte[] getImageByUserId(String em_userid);
 }
