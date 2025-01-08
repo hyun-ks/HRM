@@ -39,7 +39,7 @@
                                 class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Attendance</a>
                         </li>
                         <li class="mb-3">
-                            <router-link to="Employee"
+                            <router-link to="EmployeeList"
                                 class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Member</router-link>
                         </li>
                         <li class="mb-3">

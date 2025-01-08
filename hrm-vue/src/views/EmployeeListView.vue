@@ -1,5 +1,5 @@
 <template>
-<div>
+    <div>
     <!--start Side bar-->
     <div class="fixed left-0 top-0 w-64 h-full bg-gray-800 p-4">
         <a href="#" class="flex items-center pb-4 border-b border-b-gray-600">
@@ -9,7 +9,7 @@
 
         <ul class="mt-4">
             <li class="mb-1">
-                <router-link to="main" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
+                <router-link to="Main" class="flex items-center py-2 px-4 hover:bg-gray-400 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
@@ -36,7 +36,7 @@
                         <router-link to="EmployeeList" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Member</router-link>
                     </li>
                     <li class="mb-3">
-                        <a href="#" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Employee Insert</a>
+                        <router-link to="Empinsert" class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Employee Insert</router-link>
                     </li>
                 </ul>
             </li>
@@ -73,7 +73,6 @@
         </ul>
     </div>
     <!--end Side bar-->
-    <!--start Main-->
     <main class="w-[calc(100%-256px)] ml-64 bg-gray-50 min-h-screen"><!--뷰포트의 높이만큼 채우기-->
         <div class="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5">
             <button type="button" class="text-gray-600 text-lg">
@@ -86,7 +85,7 @@
                     <a href="#" class=" text-gray-400 hover:text-gray-600">Dashboard</a>
                 </li>
                 <li class="text-gray-600 mr-2">/</li>
-                <li class="text-gray-600 mr-2">Analytics</li>
+                <li class="text-gray-600 mr-2">Employee</li>
             </ul>
             <ul class="ml-auto flex items-center">
                 <li class="mr-2">
@@ -105,167 +104,137 @@
                 </li>
             </ul>
         </div>
-            
-
-        <!--start 3 bars-->
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                    </svg>
-                    <div class="text-lg font-bold text-gray-400">Total Employee</div>
-                    </div>
-                    <div class="text-2xl font-semibold pt-3">159</div>
-                </div>
-                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                    </svg>
-                    <div class="text-lg font-bold text-gray-400">New Employee</div>
-                    </div>
-                    <div class="text-2xl font-semibold pt-3">40</div>
-                </div>
-                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                    </svg>
-                    <div class="text-lg font-bold text-gray-400">Resigned Employee</div>
-                    </div>
-                    <div class="text-2xl font-semibold pt-3">20</div>
-                </div>
-            </div>
-            <!--End 3 bars-->
-            <!--Recent Attending-->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!--employee table start-->
+    <div class="p-6">
+        <div class="grid grid-cols-1">
             <div class="bg-white border border-gray-100 shadow-md shadow-black/10 p-6 rounded-md">
-                <div class="flex justify-between mb-4">
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[540px]">
+            <div class="overflow-auto">
+                        <table class="w-full">
                             <thead>
                                 <tr>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 rounded-tl-md rounded-bl-md">name</th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50">rank</th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 rounded-tr-md rounded-br-md">status</th>
+                                    <th class=" text-white py-2 px-4 bg-gray-500 rounded-tl-md rounded-bl-md">
+                                        <div class="flex items-center justify-center">
+                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-black transition duration-150 ease-in-out">
+                                        </div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">pic</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">dept</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">position</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">name</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">birth</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">gender</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">phone</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">address</div>
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500 rounded-tr-md rounded-br-md">
+                                        <div class="flex items-center justify-center"></div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="(row, index) in result" v-bind:key="row.em_userid" v-bind:class="{'bg-gray-100' : index % 2 === 0}"><!--index는 0부터시작 그래서 첫번째 행부터 영향받음-->
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        <div class="flex items-center justify-center">
+                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-black transition duration-150 ease-in-out">
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
+                                        <div class="flex items-center justify-center">
+                                            <img :src="getFullImagePath() + row.em_location" alt="" class="w-10 h-10 rounded-full object-cover">
+                                            <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="" class="w-10 h-10 rounded-full object-cover">
+
+                                
+                                            {{ console.log(getFullImagePath(row.em_location)) }}
                                         </div>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.dept_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
-                                        </div>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_position }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
-                                        </div>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_birth }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_gender }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <div class="flex items-center">
-                                            <img src="https://placehold.co/40*40" alt="" class="w-10 h-10 rounded-full object-cover black">
-                                            <a href="#" class="text-gray-600 text-sm font-medium ml-2">Attedning Employee</a>
-                                        </div>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_phone }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="text-sm font-medium text-gray-400">Assistant Manager</span>
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_address }}</span>
                                     </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="inline-block p-1 rounded bg-emerald-50 text-emerald-500">present</span>
+                                    <td>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                        </svg>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
-
                         </table>
-
-                    </div>
-                    
                 </div>
             </div>
-            </div>
         </div>
-        </main>
-    <!--end Main-->
-
-</div>
-    
+    </div>
+    <!--employee table end-->
+    </main>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
-export default{
-    name: 'Main',
-    data(){
-        return{
-            isOpen: false,
-            result: []
-        }
-    },
-    methods: {
-        getData(){
-            axios
-            .get('http://localhost:8085/employee')
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        },
-        toggleDropdown(){
-            this.isOpen = !this.isOpen
-        }
-        
 
+export default {
+  name: 'EmployeeList',
+  data() {
+    return {
+      isOpen : false,
+      result: []    
     }
-}
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios
+        .get('http://localhost:8085/employeeList')
+        .then((response) => {
+          console.log(response)
+          this.result = response.data  
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    toggleDropdown(){
+        this.isOpen = !this.isOpen
+    },
+    getFullImagePath(fileName){
+       return `${process.env.BASE_IMAGE_PATH}${fileName}`
+    }
+  }
+  }
 </script>
+

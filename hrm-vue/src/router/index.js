@@ -7,9 +7,9 @@ const routes = [
         component: () => import('../views/MainView.vue'),
       },
       {
-        path: '/employee',
-        name: 'Employee',
-        component: () => import('../views/EmployeeView.vue'),
+        path: '/employeeList',
+        name: 'EmployeeList',
+        component: () => import('../views/EmployeeListView.vue'),
       },
       {
         path: '/approval',
@@ -26,6 +26,11 @@ const routes = [
         path: '/empinsert',
         name: 'EmpInsert',
         component: () => import('../views/EmpInsertView.vue')
+      },
+      {
+        path: '/employee',
+        name: 'Employee',
+        component: () => import('../views/EmployeeView.vue')
       }
   ];
 

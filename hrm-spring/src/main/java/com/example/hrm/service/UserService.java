@@ -1,6 +1,4 @@
 package com.example.hrm.service;
-
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +16,13 @@ public class UserService {
 
     public int insert(UserDto user_info) {
         return uDao.insert(user_info);
+    }
+
+    public int editByUserid(UserDto uDto){
+        return uDao.editByUserid(uDto);
+    }
+
+    public int delete(String em_userid){
+        return uDao.delete(em_userid);
     }
 }
