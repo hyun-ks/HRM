@@ -137,7 +137,8 @@
                     <hr class="my-4 border-gray-300">
 
                     <div class="relative">
-                        <input type="text" name="em_userid" :placeholder="placeholderText.em_userid" :class="{ active: active.em_userid }" v-model="result.em_userid"
+                        <input type="text" name="em_userid" :placeholder="placeholderText.em_userid"
+                            :class="{ active: active.em_userid }" v-model="result.em_userid"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -147,8 +148,9 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="em_name" :placeholder="placeholderText.em_name" :class="{ active: active.em_name }"
-                            v-model="result.em_name" class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
+                        <input type="text" name="em_name" :placeholder="placeholderText.em_name"
+                            :class="{ active: active.em_name }" v-model="result.em_name"
+                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -157,8 +159,9 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="em_birth" :placeholder="placeholderText.em_birth" :class="{ active: active.em_birth }"
-                            v-model="result.em_birth" class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
+                        <input type="text" name="em_birth" :placeholder="placeholderText.em_birth"
+                            :class="{ active: active.em_birth }" v-model="result.em_birth"
+                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -205,11 +208,13 @@
                         <div class="text-black font-bold mb-2">Select Gender</div>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" id="male" v-bind:value="true" class="w-4 h-4">
+                                <input type="radio" name="gender" id="male" v-bind:value="true" class="w-4 h-4"
+                                    v-model="result.em_gender">
                                 <label for="male" class="text-gray-700">Male</label>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" id="female" v-bind:value="false" class="w-4 h-4">
+                                <input type="radio" name="gender" id="female" v-bind:value="false" class="w-4 h-4"
+                                    v-model="result.em_gender">
                                 <label for="female" class="text-gray-700">Female</label>
                             </div>
                         </div>
@@ -217,16 +222,16 @@
 
                     <div class="form-group mb-2">
                         <label for="rank" class="mr-2">직급 선택:</label>
-                        <select id="rank" name="rank" class="border-2">
-                            <option value="r1">사장</option>
-                            <option value="r2">부장</option>
-                            <option value="r3">차장</option>
+                        <select id="rank" name="rank" class="border-2" v-model="selectedRank">
+                            <option v-for="row in rank" :key="row.ranknum" :value="row.ranknum">
+                                {{ row.em_position }}
+                            </option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="dept" class="mr-2">부서 선택:</label>
-                        <select id="dept" name="dept" class="border-2">
+                        <select id="dept" name="dept" class="border-2" v-model="result.dept_no">
                             <option value="d1">인사팀</option>
                             <option value="d2">개발팀</option>
                             <option value="d3">마케팅팀</option>
@@ -260,48 +265,65 @@ export default {
                 em_phone: '', em_address: '', em_password: ''
             },
             active: { em_userid: false, em_name: false, em_birth: false, em_phone: false, em_address: false, em_password: false },
-            placeholderText: {em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth', 
+            placeholderText: {
+                em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
                 em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
-            }
+            },
+            rank: [],
+            selectedRank: '1'
         }
     },
     created() {
+        this.getData()
     },
     methods: {
+        getData(){
+            axios.get('http://localhost:8085/empinsert')
+                .then((response) => {
+                    console.log(response)
+                    this.rank = response.data
+                    console.log(this.rank)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        },
         toggleDropdown() {
             this.isOpen = !this.isOpen
         },
         save() {
-            if(this.result.em_userid == ''){
+            if (this.result.em_userid == '') {
                 this.active.em_userid = true
                 this.placeholderText.em_userid = 'Userid is Required'
             }
-            if(this.result.em_name == ''){
+            if (this.result.em_name == '') {
                 this.active.em_name = true
                 this.placeholderText.em_name = 'Name is Required'
             }
-            if(this.result.em_birth == ''){
+            if (this.result.em_birth == '') {
                 this.active.em_birth = true
                 this.placeholderText.em_birth = 'Enter Birth Date'
             }
-            if(this.result.em_phone == ''){
+            if (this.result.em_phone == '') {
                 this.active.em_phone = true
                 this.placeholderText.em_phone = 'Enter Phone number'
             }
-            if(this.result.em_password == ''){
+            if (this.result.em_password == '') {
                 this.active.em_password = true
                 this.placeholderText.em_password = 'Password is Required'
             }
-            
+
             console.log(this.result)
 
             axios.post('http://localhost:8085/empinsert', this.result)
-            .then((response) => {
-                console.log(response)
-                
-            })
-            .catch((error) => console.log(error))
-        }
+                .then((response) => {
+                    console.log(response)
+
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        },
 
     }
 }
@@ -309,6 +331,6 @@ export default {
 
 <style scoped>
 .active::placeholder {
-    color:red;
+    color: red;
 }
 </style>

@@ -2,6 +2,7 @@ package com.example.hrm.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.hrm.dto.RankDto;
 import com.example.hrm.dto.UserDto;
 import com.example.hrm.service.UserService;
 
@@ -39,7 +40,14 @@ public class DataController {
     @PostMapping("/empinsert")
     public int insertEmp(@RequestBody UserDto uDto) {        
         return uService.insert(uDto);
-    }    
+    }
+
+    @GetMapping("/empinsert")
+    public List<RankDto> findRankList() {        
+        return uService.findrank();
+    }
+    
+    
 
     @DeleteMapping("/empdelete")
     public void deleteemp(){
