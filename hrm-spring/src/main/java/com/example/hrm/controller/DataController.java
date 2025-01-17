@@ -2,7 +2,7 @@ package com.example.hrm.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hrm.dto.RankDto;
+// import com.example.hrm.dto.RankDto;
 import com.example.hrm.dto.UserDto;
 import com.example.hrm.service.UserService;
 
@@ -42,11 +42,15 @@ public class DataController {
         return uService.insert(uDto);
     }
 
+    // @GetMapping("/empinsert")
+    // public List<RankDto> findRankList() {        
+    //     return uService.findrank();
+    // } 
+
     @GetMapping("/empinsert")
-    public List<RankDto> findRankList() {        
-        return uService.findrank();
+    public List<UserDto> findDeptRank(){
+        return uService.findLocation();
     }
-    
     
 
     @DeleteMapping("/empdelete")

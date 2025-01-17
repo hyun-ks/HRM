@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hrm.dao.UserDao;
-import com.example.hrm.dto.RankDto;
+// import com.example.hrm.dto.RankDto;
 import com.example.hrm.dto.UserDto;
 
 @Service
@@ -15,8 +15,12 @@ public class UserService {
         return uDao.findAll();
     }
 
-    public List<RankDto> findrank(){
-        return uDao.findrank();
+    // public List<RankDto> findrank(){
+    //     return uDao.findrank();
+    // }
+
+    public List<UserDto> findLocation(){
+        return uDao.findLocation();
     }
 
     public int insert(UserDto uDto) {

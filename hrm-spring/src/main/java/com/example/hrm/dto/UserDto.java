@@ -20,6 +20,7 @@ public class UserDto {
    private String em_password;
    private String em_position;
    private String dept_name;
+   private int no;
 
    @Lob
    private byte[] em_pics;

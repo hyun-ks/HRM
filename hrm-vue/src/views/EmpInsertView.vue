@@ -223,18 +223,18 @@
                     <div class="form-group mb-2">
                         <label for="rank" class="mr-2">직급 선택:</label>
                         <select id="rank" name="rank" class="border-2" v-model="selectedRank">
-                            <option v-for="row in rank" :key="row.ranknum" :value="row.ranknum">
+                            <option v-for="row in rank" :key="row.no" :value="row.no">
                                 {{ row.em_position }}
                             </option>
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="dept" class="mr-2">부서 선택:</label>
-                        <select id="dept" name="dept" class="border-2" v-model="result.dept_no">
-                            <option value="d1">인사팀</option>
-                            <option value="d2">개발팀</option>
-                            <option value="d3">마케팅팀</option>
+                        <select id="dept" name="dept" class="border-2" v-model="selectedDept">
+                            <option v-for="row in rank" :key="row.no" :value="row.no">
+                                {{ row.dept_name }}
+                            </option>
                         </select>
                     </div>
 
@@ -270,7 +270,8 @@ export default {
                 em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
             },
             rank: [],
-            selectedRank: '1'
+            selectedRank: '1',
+            selectedDept: '1'
         }
     },
     created() {
