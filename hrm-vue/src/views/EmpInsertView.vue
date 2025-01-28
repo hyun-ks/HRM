@@ -254,15 +254,16 @@
 </template>
 
 <script>
-import axios from 'axios';
+//@ts-ignore 
+import axios from 'axios'
 export default {
     name: 'Empinsert',
-    data() {
+    data() {    
         return {
             isOpen: false,
             result: {
-                em_userid: '', dept_no: '', ranknum: '', em_name: '', em_birth: '', em_gender: '',
-                em_phone: '', em_address: '', em_password: ''
+                em_userid: '', dept_no: 0, ranknum: 0, em_name: '', em_birth: '', em_gender: '',
+                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: ''
             },
             active: { em_userid: false, em_name: false, em_birth: false, em_phone: false, em_address: false, em_password: false },
             placeholderText: {
@@ -270,8 +271,25 @@ export default {
                 em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
             },
             rank: [],
-            selectedRank: '1',
-            selectedDept: '1'
+            selectedRank: 1,
+            selectedDept: 1
+
+        }
+    },
+    watch:{
+        selectedRank: {
+            handler(newValue){
+                this.result.ranknum = newValue
+                if(this.result.ranknum === 2)
+                this.result.em_position = '부장'
+            }
+        },
+        selectedDept: {
+            handler(newValue){
+                this.result.dept_no = newValue
+                if(this.result.dept_no === 2)
+                this.result.dept_name = '개발2팀'
+            }
         }
     },
     created() {
@@ -319,6 +337,9 @@ export default {
             axios.post('http://localhost:8085/empinsert', this.result)
                 .then((response) => {
                     console.log(response)
+                    this.$store.commit('setUser', response.data.result)
+                    console.log(this.$store.state.user)
+                    this.$router.push({ name: 'EmployeeList'})
 
                 })
                 .catch((error) => {

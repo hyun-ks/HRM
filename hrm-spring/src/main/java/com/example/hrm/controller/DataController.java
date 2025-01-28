@@ -42,11 +42,6 @@ public class DataController {
         return uService.insert(uDto);
     }
 
-    // @GetMapping("/empinsert")
-    // public List<RankDto> findRankList() {        
-    //     return uService.findrank();
-    // } 
-
     @GetMapping("/empinsert")
     public List<UserDto> findDeptRank(){
         return uService.findLocation();

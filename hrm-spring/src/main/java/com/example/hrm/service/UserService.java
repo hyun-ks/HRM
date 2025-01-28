@@ -14,11 +14,7 @@ public class UserService {
     public List<UserDto> findAll(){
         return uDao.findAll();
     }
-
-    // public List<RankDto> findrank(){
-    //     return uDao.findrank();
-    // }
-
+    
     public List<UserDto> findLocation(){
         return uDao.findLocation();
     }

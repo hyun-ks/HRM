@@ -13,11 +13,8 @@ import com.example.hrm.dto.UserDto;
 
 @Mapper
 public interface UserDao {
-    @Select("select * from em_info natural join em_rank natural join em_dept")
+    @Select("select * from em_info")
     List<UserDto> findAll();
-
-    // @Select("select * from em_rank")
-    // List<RankDto> findrank();
 
     @Select("select em_dept.no, em_dept.dept_no, em_dept.dept_name, em_rank.ranknum, em_rank.em_position " +
     "from em_dept left join em_rank on em_dept.no = em_rank.no")
