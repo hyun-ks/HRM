@@ -1,16 +1,16 @@
 import { createStore } from 'vuex'
 
 const store = createStore({
-    state() {
+    state(){
         return {
-            user:{}
+            user: {}
         }
     },
     mutations: {
         setUser(state, value){
-            state.user = value
-        }
+        state.user = value
     }
+}
 })
 
 export default store

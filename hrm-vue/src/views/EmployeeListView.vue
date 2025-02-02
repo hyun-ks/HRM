@@ -214,7 +214,8 @@ export default {
     }
   },
   created() {
-    this.getData();
+    this.getData()
+    console.log(this.$store.state.user)
   },
   methods: {
     getData() {

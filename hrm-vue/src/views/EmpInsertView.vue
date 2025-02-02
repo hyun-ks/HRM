@@ -254,7 +254,6 @@
 </template>
 
 <script>
-//@ts-ignore 
 import axios from 'axios'
 export default {
     name: 'Empinsert',
@@ -337,7 +336,9 @@ export default {
             axios.post('http://localhost:8085/empinsert', this.result)
                 .then((response) => {
                     console.log(response)
-                    this.$store.commit('setUser', response.data.result)
+                    console.log(response.data)
+                    console.log(response.config.data)   
+                    this.$store.commit('setUser', response.config.data)
                     console.log(this.$store.state.user)
                     this.$router.push({ name: 'EmployeeList'})
 
