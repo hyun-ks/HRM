@@ -208,20 +208,33 @@
                         <div class="text-black font-bold mb-2">Select Gender</div>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" id="male" v-bind:value="true" class="w-4 h-4"
+                                <input type="radio" name="gender" id="male" v-bind:value="'남'" class="w-4 h-4"
                                     v-model="result.em_gender">
                                 <label for="male" class="text-gray-700">Male</label>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <input type="radio" name="gender" id="female" v-bind:value="false" class="w-4 h-4"
+                                <input type="radio" name="gender" id="female" v-bind:value="'여'" class="w-4 h-4"
                                     v-model="result.em_gender">
                                 <label for="female" class="text-gray-700">Female</label>
                             </div>
                         </div>
                     </div>
 
+                    <div class="flex justify-normal">
+                        <label for="upload-image" class="mr-2 mt-2">Profile Photo:</label>
+                        <div class="relative">
+                            <input type="text" id="" class="bg-white rounded-md w-16 border-2 h-10 mb-2" />
+                            <input type="file" id="upload-image" hidden @change="getFileName($event.target.files)"/>
+                            <label for="upload-image">
+                                <img src="C:\Users\hyun_\Desktop\Hrm-system\HRM\hrm-vue\src\assets\images\upload.png"
+                                    class="size-10 absolute top-1 left-3" />
+                            </label>
+                            <img id="preview" alt="" class="ml-36"/>
+                        </div>
+                    </div>
+
                     <div class="form-group mb-2">
-                        <label for="rank" class="mr-2">직급 선택:</label>
+                        <label for="rank" class="mr-2">Position:</label>
                         <select id="rank" name="rank" class="border-2" v-model="selectedRank">
                             <option v-for="row in rank" :key="row.no" :value="row.no">
                                 {{ row.em_position }}
@@ -230,7 +243,7 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="dept" class="mr-2">부서 선택:</label>
+                        <label for="dept" class="mr-2">Dept:</label>
                         <select id="dept" name="dept" class="border-2" v-model="selectedDept">
                             <option v-for="row in rank" :key="row.no" :value="row.no">
                                 {{ row.dept_name }}
@@ -257,12 +270,12 @@
 import axios from 'axios'
 export default {
     name: 'Empinsert',
-    data() {    
+    data() {
         return {
             isOpen: false,
             result: {
                 em_userid: '', dept_no: 0, ranknum: 0, em_name: '', em_birth: '', em_gender: '',
-                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: ''
+                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: '', em_pics: ''
             },
             active: { em_userid: false, em_name: false, em_birth: false, em_phone: false, em_address: false, em_password: false },
             placeholderText: {
@@ -275,32 +288,62 @@ export default {
 
         }
     },
-    watch:{
+    watch: {
         selectedRank: {
-            handler(newValue){
+            handler(newValue) {
                 this.result.ranknum = newValue
-                if(this.result.ranknum === 2)
-                this.result.em_position = '부장'
-            }
+                if (this.result.ranknum === 1) {
+                    this.result.em_position = '사장'
+                }
+                else if (this.result.ranknum === 2) {
+                    this.result.em_position = '부장'
+                }
+                else if (this.result.ranknum === 3) {
+                    this.result.em_position = '팀장'
+                }
+                else if (this.result.ranknum === 4) {
+                    this.result.em_position = '대리'
+                }
+                else if (this.result.ranknum === 5) {
+                    this.result.em_position = '사원'
+                }
+            },
+            immediate: true
         },
         selectedDept: {
-            handler(newValue){
+            handler(newValue) {
                 this.result.dept_no = newValue
-                if(this.result.dept_no === 2)
-                this.result.dept_name = '개발2팀'
-            }
+                if (this.result.dept_no === 1) {
+                    this.result.dept_name = '개발1팀'
+                }
+                else if (this.result.dept_no === 2) {
+                    this.result.dept_name = '개발2팀'
+                }
+                else if (this.result.dept_no === 3) {
+                    this.result.dept_name = '개발3팀'
+                }
+                else if (this.result.dept_no === 4) {
+                    this.result.dept_name = '인사1팀'
+                }
+                else if (this.result.dept_no === 5) {
+                    this.result.dept_name = '인사2팀'
+                }
+                else if (this.result.dept_no === 6) {
+                    this.result.dept_name = '마케팅1팀'
+                }
+            },
+            immediate: true
         }
     },
     created() {
         this.getData()
     },
     methods: {
-        getData(){
+        getData() {
             axios.get('http://localhost:8085/empinsert')
                 .then((response) => {
                     console.log(response)
                     this.rank = response.data
-                    console.log(this.rank)
                 })
                 .catch((error) => {
                     console.log(error.response.data)
@@ -331,22 +374,39 @@ export default {
                 this.placeholderText.em_password = 'Password is Required'
             }
 
-            console.log(this.result)
-
             axios.post('http://localhost:8085/empinsert', this.result)
                 .then((response) => {
                     console.log(response)
                     console.log(response.data)
-                    console.log(response.config.data)   
+                    console.log(response.config.data)
                     this.$store.commit('setUser', response.config.data)
                     console.log(this.$store.state.user)
-                    this.$router.push({ name: 'EmployeeList'})
+                    this.$router.push({ name: 'EmployeeList' })
 
                 })
                 .catch((error) => {
                     console.log(error.response.data)
                 })
         },
+        async getFileName(files) {
+            this.fileName = files[0];
+            console.log(this.fileName)
+            this.result.imgsrc = await this.base64(this.fileName);
+        },
+        base64(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    resolve(e.target.result); 
+                    console.log(e.target.result)
+                    const previewImage = document.getElementById('preview')
+                    previewImage.src = e.target.result
+                    this.result.em_pics = e.target.result
+                }
+                 reader.readAsDataURL(file)
+            });
+        }
+
 
     }
 }

@@ -109,6 +109,13 @@
     <div class="p-6">
         <div class="grid grid-cols-1">
             <div class="bg-white border border-gray-100 shadow-md shadow-black/10 p-6 rounded-md">
+                <div class="text-center flex justify-end">
+                        <button type="button"
+                            class="bg-gray-500 text-white font-semibold py-1 px-3 rounded-lg shadow-md hover:bg-gray-400 hover:text-black transition duration-200 ease-in-out"
+                            @click="delete">
+                            delete
+                        </button>
+                    </div>
             <div class="overflow-auto">
                         <table class="w-full">
                             <thead>
@@ -119,16 +126,16 @@
                                         </div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">pic</div>
+                                        <div class="flex items-center justify-center">pic</div> 
+                                    </th>
+                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
+                                        <div class="flex items-center justify-center">em_name</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">dept</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">position</div>
-                                    </th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
-                                        <div class="flex items-center justify-center">name</div>
                                     </th>
                                     <th class="text-[12px] uppercase tracking-wide font-medium text-white py-2 px-4 bg-gray-500">
                                         <div class="flex items-center justify-center">birth</div>
@@ -156,21 +163,17 @@
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <div class="flex items-center justify-center">
-                                            <img :src="getFullImagePath() + row.em_location" alt="" class="w-10 h-10 rounded-full object-cover">
-                                            <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="" class="w-10 h-10 rounded-full object-cover">
-
-                                
-                                            {{ console.log(getFullImagePath(row.em_location)) }}
+                                            <img :src="row.em_pics" alt="" class="w-10 h-10 rounded-full object-cover">
                                         </div>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-100">
+                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.dept_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_position }}</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-100">
-                                        <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_name }}</span>
                                     </td>
                                     <td class="py-2 px-4 border-b border-b-gray-100">
                                         <span class="flex items-center justify-center text-sm font-bold text-black">{{ row.em_birth }}</span>
@@ -223,17 +226,23 @@ export default {
         .get('http://localhost:8085/employeeList')
         .then((response) => {
           console.log(response)
-          this.result = response.data  
+          this.result = response.data
         })
         .catch((error) => {
           console.log(error)
         })
     },
+    delete(){
+        axios.delete('http://localhost:8085/delete')
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    },
     toggleDropdown(){
         this.isOpen = !this.isOpen
-    },
-    getFullImagePath(fileName){
-       return `${process.env.BASE_IMAGE_PATH}${fileName}`
     }
   }
   }

@@ -46,12 +46,6 @@ public class DataController {
     public List<UserDto> findDeptRank(){
         return uService.findLocation();
     }
-    
-
-    @DeleteMapping("/empdelete")
-    public void deleteemp(){
-        
-    }
 
     @PostMapping("/editByUserid")
     public int editByUserid(@RequestBody UserDto uDto){
