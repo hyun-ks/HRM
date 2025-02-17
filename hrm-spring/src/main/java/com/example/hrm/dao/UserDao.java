@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -27,6 +28,13 @@ public interface UserDao {
     @Update("update em_info set dept_no = #{dept_no}, ranknum = #{ranknum}, em_name = #{em_name}, em_birth = #{em_birth}, em_gender = #{em_gender}, em_phone = #{em_phone},em_address = #{em_address}, em_password = #{em_password} where em_userid = #{em_userid}")
     int editByUserid(UserDto uDto);
 
-    @Delete("delete from em_info where em_userid = #{em_userid}")
-    int delete(String em_userid);
+    @Delete({
+        "<script>",
+        "DELETE FROM em_info WHERE em_userid IN",
+        "<foreach item='item' collection='list' open='(' separator=',' close=')'>",
+        "#{item}",
+        "</foreach>",
+        "</script>"
+    })
+    int delete(@Param("list") List<String> em_userid);
 }

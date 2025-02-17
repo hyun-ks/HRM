@@ -27,7 +27,7 @@ public class UserService {
         return uDao.editByUserid(uDto);
     }
 
-    public int delete(String em_userid){
+    public int delete(List<String> em_userid){
         return uDao.delete(em_userid);
     }
 }
