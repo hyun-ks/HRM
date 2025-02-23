@@ -159,8 +159,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="em_birth" :placeholder="placeholderText.em_birth"
-                            :class="{ active: active.em_birth }" v-model="result.em_birth"
+                        <input type="date" name="em_birth" v-model="result.em_birth"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -180,19 +179,21 @@
                         </svg>
                     </div>
 
-                    <div class="relative">
-                        <input type="text" name="em_address" placeholder="Employee Address"
-                            :class="{ active: active.em_address }" v-model="result.em_address"
-                            class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 absolute top-1/3 left-2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                        </svg>
+                    <div class="mt-2 flex flex-col">
+                        <div class="flex items-center">
+                            <input type="text" id="postcode" v-model="postcode" placeholder="우편번호"
+                                class="p-2 rounded-lg w-full bg-gray-50 border ">
+                            <input type="button" @click="execPostcode()" value="우편번호 찾기"
+                                class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
+                        </div>
+                        <input type="text" id="em_address" v-model="result.em_address" placeholder="주소"
+                            class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
+                        <input type="text" id="em_location" v-model="result.em_location" placeholder="상세주소"
+                            class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
                     </div>
 
                     <div class="relative">
-                        <input type="text" name="em_password" :placeholder="placeholderText.em_password"
+                        <input type="password" name="em_password" :placeholder="placeholderText.em_password"
                             :class="{ active: active.em_password }" v-model="result.em_password"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -224,12 +225,12 @@
                         <label for="upload-image" class="mr-2 mt-2">Profile Photo:</label>
                         <div class="relative">
                             <input type="text" id="" class="bg-white rounded-md w-16 border-2 h-10 mb-2" />
-                            <input type="file" id="upload-image" hidden @change="getFileName($event.target.files)"/>
+                            <input type="file" id="upload-image" hidden @change="getFileName($event.target.files)" />
                             <label for="upload-image">
                                 <img src="C:\Users\hyun_\Desktop\Hrm-system\HRM\hrm-vue\src\assets\images\upload.png"
                                     class="size-10 absolute top-1 left-3" />
                             </label>
-                            <img id="preview" alt="" class="ml-36"/>
+                            <img id="preview" alt="" class="ml-36" />
                         </div>
                     </div>
 
@@ -274,17 +275,18 @@ export default {
         return {
             isOpen: false,
             result: {
-                em_userid: '', dept_no: 0, ranknum: 0, em_name: '', em_birth: '', em_gender: '',
-                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: '', em_pics: ''
+                em_userid: '', dept_no: 0, ranknum: 0, em_name: '', em_birth: '', em_gender: '', em_location: '',
+                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: '', em_pics: '',
             },
-            active: { em_userid: false, em_name: false, em_birth: false, em_phone: false, em_address: false, em_password: false },
+            active: { em_userid: false, em_name: false, em_phone: false, em_address: false, em_password: false },
             placeholderText: {
                 em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
                 em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
             },
             rank: [],
             selectedRank: 1,
-            selectedDept: 1
+            selectedDept: 1,
+            postcode: ''
 
         }
     },
@@ -361,10 +363,6 @@ export default {
                 this.active.em_name = true
                 this.placeholderText.em_name = 'Name is Required'
             }
-            if (this.result.em_birth == '') {
-                this.active.em_birth = true
-                this.placeholderText.em_birth = 'Enter Birth Date'
-            }
             if (this.result.em_phone == '') {
                 this.active.em_phone = true
                 this.placeholderText.em_phone = 'Enter Phone number'
@@ -389,22 +387,53 @@ export default {
                 })
         },
         async getFileName(files) {
-            this.fileName = files[0];
+            this.fileName = files[0]
             console.log(this.fileName)
-            this.result.imgsrc = await this.base64(this.fileName);
+            this.result.imgsrc = await this.base64(this.fileName)
         },
         base64(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader()
                 reader.onload = (e) => {
-                    resolve(e.target.result); 
+                    resolve(e.target.result)
                     console.log(e.target.result)
                     const previewImage = document.getElementById('preview')
                     previewImage.src = e.target.result
                     this.result.em_pics = e.target.result
                 }
-                 reader.readAsDataURL(file)
-            });
+                reader.readAsDataURL(file)
+            })
+        },
+        execPostcode() {
+            new daum.Postcode({
+                oncomplete: (data) => {
+                    let addr = ''
+                    let extraAddr = ''
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if (data.userSelectedType === 'R') {
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    } else {
+                        extraAddr = '';
+                    }
+                    this.postcode = data.zonecode;
+                    this.result.em_address = addr;
+                    document.getElementById("em_location").focus();
+                }
+            }).open();
         }
 
 

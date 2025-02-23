@@ -131,9 +131,9 @@
                 </ul>
             </div>
 
-
+            <!--start update view-->
             <div class="p-6">
-                <div class="grid grid-cols-4 gap-6">
+                <div class="grid grid-cols-2">
                     <div class="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden">
                         <div class="p-6">
                             <div class="flex flex-col items-center mb-4">
@@ -143,48 +143,82 @@
                                 <p class="text-gray-600">Project Manager</p>
                             </div>
                             <div class="bg-gray-100 rounded-md p-4">
-                                <ul class="space-y-2 text-sm">
-                                    <li><span class="font-semibold">Dept:</span> 인사2팀</li>
-                                    <li><span class="font-semibold">Birth:</span> 1990-02-05</li>
-                                    <li><span class="font-semibold">Phone:</span> 010-1111-2222</li>
-                                    <li><span class="font-semibold">Address:</span> 광주광역시 서구 상무대로 123, 301호</li>
-                                </ul>
+                                <div class="flex items-center justify-start border-t-2 py-2">
+                                    <label class="mr-10 text-lg">아이디</label>
+                                    <input type="text" name="em_userid" v-model="em_userid" :placeholder="em_userid"
+                                        class="w-3/4 p-2 rounded-xl border bg-gray-50">
+                                </div>
+                                <div class="flex items-center justify-start border-t-2 py-2">
+                                    <label class="mr-5 text-lg">비밀번호</label>
+                                    <input type="password" name="em_password" v-model="password" placeholder="비밀번호"
+                                        class="w-3/4 p-2 rounded-xl border bg-gray-50">
+                                </div>
+                                <div class="flex items-center justify-start border-t-2 py-2">
+                                    <label class="mr-5 text-lg">전화번호</label>
+                                    <input type="text" name="em_phone" v-model="phone" placeholder="전화번호"
+                                        class="w-3/4 p-2 rounded-xl border bg-gray-50">
+                                </div>
+                                <div class="flex items-center justify-start border-t-2 py-2">
+                                    <label class="mr-5 text-lg">생년월일</label>
+                                    <input type="date" name="em_birthdate" v-model="birthdate" placeholder="생년월일"
+                                        class="w-3/4 p-2 rounded-xl border bg-gray-50">
+                                </div>
+
+                                <div class="mt-2 flex flex-col">
+                                    <div class="flex items-center">
+                                        <input type="text" id="postcode" v-model="postcode" placeholder="우편번호"
+                                            class="p-2 rounded-lg w-full ">
+                                        <input type="button" @click="execPostcode()" value="우편번호 찾기"
+                                            class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
+                                    </div>
+                                    <input type="text" id="address" v-model="address" placeholder="주소"
+                                        class="p-2 rounded-lg mt-2 w-full">
+                                    <input type="text" id="detailAddress" v-model="detailAddress" placeholder="상세주소"
+                                        class="p-2 rounded-lg mt-2 w-full">
+                                </div>
+
+
+                                <div class="form-group mb-2">
+                                    <label for="rank" class="mr-2">Position:</label>
+                                    <select id="rank" name="rank" class="border-2" v-model="selectedRank">
+                                        <option v-for="row in rank" :key="row.no" :value="row.no">
+                                            {{ row.em_position }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <label for="dept" class="mr-2">Dept:</label>
+                                    <select id="dept" name="dept" class="border-2" v-model="selectedDept">
+                                        <option v-for="row in rank" :key="row.no" :value="row.no">
+                                            {{ row.dept_name }}
+                                        </option>
+                                    </select>
+                                </div>
+
                             </div>
-                        </div>     
+                        </div>
                     </div>
-                    <div class="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex flex-col items-center mb-4">
-                                <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="Profile Picture"
-                                    class="w-24 h-24 rounded-full object-cover mb-3">
-                                <h2 class="text-xl font-semibold">Richard Steven</h2>
-                                <p class="text-gray-600">Project Manager</p>
-                            </div>
-                            <div class="bg-gray-100 rounded-md p-4">
-                                <ul class="space-y-2 text-sm">
-                                    <li><span class="font-semibold">Dept:</span> 인사2팀</li>
-                                    <li><span class="font-semibold">Birth:</span> 1990-02-05</li>
-                                    <li><span class="font-semibold">Phone:</span> 010-1111-2222</li>
-                                    <li><span class="font-semibold">Address:</span> 광주광역시 서구 상무대로 123, 301호</li>
-                                </ul>
-                            </div>
-                        </div>     
-                    </div>
-                    
                 </div>
             </div>
         </main>
     </div>
 </template>
 
+
+
 <script>
 import axios from 'axios'
 export default {
-    name: 'Main',
+    name: 'Employee',
     data() {
         return {
             isOpen: false,
-            result: []
+            postcode: '',
+            address: '',
+            detailAddress: '',
+            extraAddress: '',
+            em_userid: ''
         }
     },
     methods: {
@@ -200,9 +234,39 @@ export default {
         },
         toggleDropdown() {
             this.isOpen = !this.isOpen
+        },
+        execPostcode() {
+            new daum.Postcode({
+                oncomplete: (data) => {
+                    let addr = ''
+                    let extraAddr = ''
+
+                    if (data.userSelectedType === 'R') { 
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if (data.userSelectedType === 'R') {
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    } else {
+                        extraAddr = '';
+                    }
+                    this.postcode = data.zonecode;
+                    this.address = addr;
+                    this.extraAddress = extraAddr;
+                    document.getElementById("detailAddress").focus();
+                }
+            }).open();
         }
-
-
     }
 }
 </script>
