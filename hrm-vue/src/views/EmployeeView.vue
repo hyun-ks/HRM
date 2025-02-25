@@ -145,22 +145,22 @@
                             <div class="bg-gray-100 rounded-md p-4">
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-10 text-lg">아이디</label>
-                                    <input type="text" name="em_userid" v-model="em_userid" :placeholder="em_userid"
+                                    <input type="text" name="em_userid" :value="employeeStore.selectedEmployee.em_name"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">비밀번호</label>
-                                    <input type="password" name="em_password" v-model="password" placeholder="비밀번호"
+                                    <input type="password" name="em_password" :value="employeeStore.selectedEmployee.em_password"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">전화번호</label>
-                                    <input type="text" name="em_phone" v-model="phone" placeholder="전화번호"
+                                    <input type="text" name="em_phone" :value="employeeStore.selectedEmployee.em_phone"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">생년월일</label>
-                                    <input type="date" name="em_birthdate" v-model="birthdate" placeholder="생년월일"
+                                    <input type="date" name="em_birthdate" :value="employeeStore.selectedEmployee.em_birth"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
 
@@ -171,12 +171,11 @@
                                         <input type="button" @click="execPostcode()" value="우편번호 찾기"
                                             class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
                                     </div>
-                                    <input type="text" id="address" v-model="address" placeholder="주소"
+                                    <input type="text" id="address" v-model="address"
                                         class="p-2 rounded-lg mt-2 w-full">
-                                    <input type="text" id="detailAddress" v-model="detailAddress" placeholder="상세주소"
+                                    <input type="text" id="detailAddress" v-model="detailAddress"
                                         class="p-2 rounded-lg mt-2 w-full">
                                 </div>
-
 
                                 <div class="form-group mb-2">
                                     <label for="rank" class="mr-2">Position:</label>
@@ -196,6 +195,14 @@
                                     </select>
                                 </div>
 
+                                <div class="text-center">
+                        <button type="button"
+                            class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-400 hover:text-black transition duration-200 ease-in-out"
+                            @click="update">
+                            Update
+                        </button>
+                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -208,65 +215,87 @@
 
 
 <script>
-import axios from 'axios'
+import { useEmployeeStore } from '../store/emp'
+import { ref } from 'vue'
 export default {
-    name: 'Employee',
-    data() {
-        return {
-            isOpen: false,
-            postcode: '',
-            address: '',
-            detailAddress: '',
-            extraAddress: '',
-            em_userid: ''
-        }
-    },
-    methods: {
-        getData() {
-            axios
-                .get('http://localhost:8085/employee')
-                .then((response) => {
-                    console.log(response)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-        toggleDropdown() {
-            this.isOpen = !this.isOpen
-        },
-        execPostcode() {
-            new daum.Postcode({
-                oncomplete: (data) => {
-                    let addr = ''
-                    let extraAddr = ''
+  name: 'Employee',
+  setup() {
+    const isOpen = ref(false)
+    const postcode = ref('')
+    const address = ref('')
+    const detailAddress = ref('')
+    const extraAddress = ref('')
+    const em_userid = ref('')
+    const em_password = ref('')
+    const em_birth = ref('')
+    const em_phone = ref('')
+    const employeeStore = useEmployeeStore()
 
-                    if (data.userSelectedType === 'R') { 
-                        addr = data.roadAddress;
-                    } else {
-                        addr = data.jibunAddress;
-                    }
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value;
+      console.log(employeeStore.selectedEmployee.em_name)
+      console.log(employeeStore.selectedEmployee)
+    };
 
-                    if (data.userSelectedType === 'R') {
-                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                            extraAddr += data.bname;
-                        }
-                        if (data.buildingName !== '' && data.apartment === 'Y') {
-                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                        }
-                        if (extraAddr !== '') {
-                            extraAddr = ' (' + extraAddr + ')';
-                        }
-                    } else {
-                        extraAddr = '';
-                    }
-                    this.postcode = data.zonecode;
-                    this.address = addr;
-                    this.extraAddress = extraAddr;
-                    document.getElementById("detailAddress").focus();
-                }
-            }).open();
+    const execPostcode = () => {
+      new daum.Postcode({
+        oncomplete: (data) => {
+          let addr = '';
+          let extraAddr = ''
+
+          if (data.userSelectedType === 'R') { 
+            addr = data.roadAddress
+          } else {
+            addr = data.jibunAddress;
+          }
+
+          if (data.userSelectedType === 'R') {
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              extraAddr += data.bname;
+            }
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName)
+            }
+            if (extraAddr !== '') {
+              extraAddr = ' (' + extraAddr + ')';
+            }
+          } else {
+            extraAddr = ''
+          }
+          postcode.value = data.zonecode
+          address.value = addr
+          extraAddress.value = extraAddr
+          document.getElementById("detailAddress").focus()
         }
+      }).open()
     }
+        const update = async () => {
+            try{
+                const response = await axios.patch('http://localhost:8085/employee',{
+                    em_userid : employeeStore.selectedEmployee.userid
+                })
+                console.log(response.data)
+            }
+                catch(error){
+                    console.log(error.response.data)
+                }
+            }
+
+    return {
+      isOpen,
+      postcode,
+      address,
+      detailAddress,
+      extraAddress,
+      em_userid,
+      em_password,
+      em_birth,
+      em_phone,
+      toggleDropdown,
+      execPostcode,
+      employeeStore,
+      update
+    }
+  }
 }
 </script>

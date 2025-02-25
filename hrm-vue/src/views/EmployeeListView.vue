@@ -269,6 +269,8 @@
 
 <script>
 import axios from 'axios'
+import { useEmployeeStore } from '../store/emp'
+import { storeToRefs } from 'pinia'
 
 export default {
     name: 'EmployeeList',
@@ -313,8 +315,11 @@ export default {
             },
             modify(index){
                 const selectedRow = this.result[index]
-                console.log(selectedRow)
-                console.log(selectedRow.em_userid)
+                const employeeStore = useEmployeeStore()
+                employeeStore.selectEmployee(selectedRow)
+
+                console.log(employeeStore.selectedEmployee.em_name)
+  
                 this.$router.push({name: 'Employee'})
             }
         }

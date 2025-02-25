@@ -377,8 +377,6 @@ export default {
                     console.log(response)
                     console.log(response.data)
                     console.log(response.config.data)
-                    this.$store.commit('setUser', response.config.data)
-                    console.log(this.$store.state.user)
                     this.$router.push({ name: 'EmployeeList' })
 
                 })
