@@ -137,15 +137,14 @@
                     <div class="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden">
                         <div class="p-6">
                             <div class="flex flex-col items-center mb-4">
-                                <img src="C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\aho.png" alt="Profile Picture"
+                                <img :src="employeeStore.selectedEmployee.em_pics" alt="Profile Picture"
                                     class="w-24 h-24 rounded-full object-cover mb-3">
-                                <h2 class="text-xl font-semibold">Richard Steven</h2>
-                                <p class="text-gray-600">Project Manager</p>
+                                <h2 class="text-xl font-semibold">{{ employeeStore.selectedEmployee.em_name }}</h2>
                             </div>
                             <div class="bg-gray-100 rounded-md p-4">
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-10 text-lg">아이디</label>
-                                    <input type="text" name="em_userid" :value="employeeStore.selectedEmployee.em_name"
+                                    <input type="text" name="em_userid" :value="employeeStore.selectedEmployee.em_userid"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
@@ -171,16 +170,16 @@
                                         <input type="button" @click="execPostcode()" value="우편번호 찾기"
                                             class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
                                     </div>
-                                    <input type="text" id="address" v-model="address"
+                                    <input type="text" id="address" v-model="address" :placeholder="employeeStore.selectedEmployee.em_address"
                                         class="p-2 rounded-lg mt-2 w-full">
-                                    <input type="text" id="detailAddress" v-model="detailAddress"
+                                    <input type="text" id="detailAddress" v-model="detailAddress" :placeholder="employeeStore.selectedEmployee.em_location"
                                         class="p-2 rounded-lg mt-2 w-full">
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <label for="rank" class="mr-2">Position:</label>
                                     <select id="rank" name="rank" class="border-2" v-model="selectedRank">
-                                        <option v-for="row in rank" :key="row.no" :value="row.no">
+                                        <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
                                             {{ row.em_position }}
                                         </option>
                                     </select>
@@ -189,7 +188,7 @@
                                 <div class="form-group mb-2">
                                     <label for="dept" class="mr-2">Dept:</label>
                                     <select id="dept" name="dept" class="border-2" v-model="selectedDept">
-                                        <option v-for="row in rank" :key="row.no" :value="row.no">
+                                        <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
                                             {{ row.dept_name }}
                                         </option>
                                     </select>
@@ -215,8 +214,9 @@
 
 
 <script>
+import { useRouter } from 'vue-router'
 import { useEmployeeStore } from '../store/emp'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 export default {
   name: 'Employee',
   setup() {
@@ -229,24 +229,61 @@ export default {
     const em_password = ref('')
     const em_birth = ref('')
     const em_phone = ref('')
+    const em_address = ref('')
+    const em_location = ref('')
+    const selectedRank = ref('1')
+    const selectedDept = ref('1')
+    const router = useRouter()
     const employeeStore = useEmployeeStore()
 
+    // watch(selectedRank, (newValue) => {
+    //   rankdeptStore.rank.ranknum = newValue;
+    //   if (rankdeptStore.rank.ranknum  === 1) {
+    //     rankdeptStore.rank.em_position = '사장'
+    //   } else if (rankdeptStore.rank.ranknum === 2) {
+    //     rankdeptStore.rank.em_position = '부장'
+    //   } else if (rankdeptStore.rank.ranknum === 3) {
+    //     rankdeptStore.rank.em_position = '팀장'
+    //   } else if (rankdeptStore.rank.ranknum === 4) {
+    //     rankdeptStore.rank.em_position = '대리'
+    //   } else if (rankdeptStore.rank.ranknum === 5) {
+    //     rankdeptStore.rank.em_position = '사원'
+    //   }
+    // }, { immediate: true });
+
+    // watch(selectedDept, (newValue) => {
+    //     rankdeptStore.rank.dept_no = newValue;
+    //   if (rankdeptStore.rank.dept_no === 1) {
+    //     rankdeptStore.rank.dept_name = '개발1팀'
+    //   } else if (rankdeptStore.rank.dept_no === 2) {
+    //     rankdeptStore.rank.dept_name = '개발2팀'
+    //   } else if (rankdeptStore.rank.dept_no === 3) {
+    //     rankdeptStore.rank.dept_name = '개발3팀'
+    //   } else if (rankdeptStore.rank.dept_no === 4) {
+    //     rankdeptStore.rank.dept_name = '인사1팀'
+    //   } else if (rankdeptStore.rank.dept_no === 5) {
+    //     rankdeptStore.rank.dept_name = '인사2팀'
+    //   } else if (rankdeptStore.rank.dept_no === 6) {
+    //     rankdeptStore.rank.dept_name = '마케팅1팀'
+    //   }
+    // }, { immediate: true });
+
     const toggleDropdown = () => {
-      isOpen.value = !isOpen.value;
-      console.log(employeeStore.selectedEmployee.em_name)
+      isOpen.value = !isOpen.value
+      console.log(employeeStore.selectedEmployee.em_address)
       console.log(employeeStore.selectedEmployee)
-    };
+    }
 
     const execPostcode = () => {
       new daum.Postcode({
         oncomplete: (data) => {
-          let addr = '';
+          let addr = ''
           let extraAddr = ''
 
           if (data.userSelectedType === 'R') { 
             addr = data.roadAddress
           } else {
-            addr = data.jibunAddress;
+            addr = data.jibunAddress;   
           }
 
           if (data.userSelectedType === 'R') {
@@ -257,29 +294,23 @@ export default {
               extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName)
             }
             if (extraAddr !== '') {
-              extraAddr = ' (' + extraAddr + ')';
+              extraAddr = ' (' + extraAddr + ')'
             }
           } else {
             extraAddr = ''
           }
           postcode.value = data.zonecode
           address.value = addr
-          extraAddress.value = extraAddr
+          detailAddress.value = extraAddr
           document.getElementById("detailAddress").focus()
         }
       }).open()
     }
-        const update = async () => {
-            try{
-                const response = await axios.patch('http://localhost:8085/employee',{
-                    em_userid : employeeStore.selectedEmployee.userid
-                })
-                console.log(response.data)
-            }
-                catch(error){
-                    console.log(error.response.data)
-                }
-            }
+
+    const update = () => {
+        router.push({name: 'EmployeeList'})
+
+    }
 
     return {
       isOpen,
@@ -294,7 +325,11 @@ export default {
       toggleDropdown,
       execPostcode,
       employeeStore,
-      update
+      update,
+      selectedDept,
+      selectedRank,
+      em_address,
+      em_location
     }
   }
 }

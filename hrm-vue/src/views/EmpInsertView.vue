@@ -138,7 +138,7 @@
 
                     <div class="relative">
                         <input type="text" name="em_userid" :placeholder="placeholderText.em_userid"
-                            :class="{ active: active.em_userid }" v-model="result.em_userid"
+                            :class="{ active: active.em_userid }" v-model="employeeStore.selectedEmployee.em_userid"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -149,7 +149,7 @@
 
                     <div class="relative">
                         <input type="text" name="em_name" :placeholder="placeholderText.em_name"
-                            :class="{ active: active.em_name }" v-model="result.em_name"
+                            :class="{ active: active.em_name }" v-model="employeeStore.selectedEmployee.em_name"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -159,7 +159,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="date" name="em_birth" v-model="result.em_birth"
+                        <input type="date" name="em_birth" v-model="employeeStore.selectedEmployee.em_birth"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -170,7 +170,7 @@
 
                     <div class="relative">
                         <input type="text" name="em_phone" :placeholder="placeholderText.em_phone"
-                            :class="{ active: active.em_phone }" v-model="result.em_phone"
+                            :class="{ active: active.em_phone }" v-model="employeeStore.selectedEmployee.em_phone"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -186,15 +186,15 @@
                             <input type="button" @click="execPostcode()" value="우편번호 찾기"
                                 class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
                         </div>
-                        <input type="text" id="em_address" v-model="result.em_address" placeholder="주소"
+                        <input type="text" id="em_address" v-model="employeeStore.selectedEmployee.em_address" placeholder="주소"
                             class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
-                        <input type="text" id="em_location" v-model="result.em_location" placeholder="상세주소"
+                        <input type="text" id="em_location" v-model="employeeStore.selectedEmployee.em_location" placeholder="상세주소"
                             class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
                     </div>
 
                     <div class="relative">
                         <input type="password" name="em_password" :placeholder="placeholderText.em_password"
-                            :class="{ active: active.em_password }" v-model="result.em_password"
+                            :class="{ active: active.em_password }" v-model="employeeStore.selectedEmployee.em_password"
                             class="w-full p-2 mt-2 pl-10 rounded-xl border bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6 absolute top-1/3 left-2">
@@ -210,12 +210,12 @@
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-2">
                                 <input type="radio" name="gender" id="male" v-bind:value="'남'" class="w-4 h-4"
-                                    v-model="result.em_gender">
+                                    v-model="employeeStore.selectedEmployee.em_gender">
                                 <label for="male" class="text-gray-700">Male</label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <input type="radio" name="gender" id="female" v-bind:value="'여'" class="w-4 h-4"
-                                    v-model="result.em_gender">
+                                    v-model="employeeStore.selectedEmployee.em_gender">
                                 <label for="female" class="text-gray-700">Female</label>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
                     <div class="form-group mb-2">
                         <label for="rank" class="mr-2">Position:</label>
                         <select id="rank" name="rank" class="border-2" v-model="selectedRank">
-                            <option v-for="row in rank" :key="row.no" :value="row.no">
+                            <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
                                 {{ row.em_position }}
                             </option>
                         </select>
@@ -246,7 +246,7 @@
                     <div class="form-group mb-2">
                         <label for="dept" class="mr-2">Dept:</label>
                         <select id="dept" name="dept" class="border-2" v-model="selectedDept">
-                            <option v-for="row in rank" :key="row.no" :value="row.no">
+                            <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
                                 {{ row.dept_name }}
                             </option>
                         </select>
@@ -268,174 +268,164 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { ref, reactive, watch, onMounted } from 'vue'
+import { useEmployeeStore } from '../store/emp' 
+
 export default {
-    name: 'Empinsert',
-    data() {
-        return {
-            isOpen: false,
-            result: {
-                em_userid: '', dept_no: 0, ranknum: 0, em_name: '', em_birth: '', em_gender: '', em_location: '',
-                em_phone: '', em_address: '', em_password: '', dept_name: '', em_position: '', em_pics: '',
-            },
-            active: { em_userid: false, em_name: false, em_phone: false, em_address: false, em_password: false },
-            placeholderText: {
-                em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
-                em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
-            },
-            rank: [],
-            selectedRank: 1,
-            selectedDept: 1,
-            postcode: ''
+  setup() {
+    const employeeStore = useEmployeeStore()
+    const isOpen = ref(false)
+    const active = reactive({
+      em_userid: false, em_name: false, em_phone: false, em_address: false, em_password: false
+    })
+    const placeholderText = reactive({
+      em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
+      em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
+    })
+    const selectedRank = ref(1)
+    const selectedDept = ref(1)
+    const postcode = ref('')
 
-        }
-    },
-    watch: {
-        selectedRank: {
-            handler(newValue) {
-                this.result.ranknum = newValue
-                if (this.result.ranknum === 1) {
-                    this.result.em_position = '사장'
-                }
-                else if (this.result.ranknum === 2) {
-                    this.result.em_position = '부장'
-                }
-                else if (this.result.ranknum === 3) {
-                    this.result.em_position = '팀장'
-                }
-                else if (this.result.ranknum === 4) {
-                    this.result.em_position = '대리'
-                }
-                else if (this.result.ranknum === 5) {
-                    this.result.em_position = '사원'
-                }
-            },
-            immediate: true
-        },
-        selectedDept: {
-            handler(newValue) {
-                this.result.dept_no = newValue
-                if (this.result.dept_no === 1) {
-                    this.result.dept_name = '개발1팀'
-                }
-                else if (this.result.dept_no === 2) {
-                    this.result.dept_name = '개발2팀'
-                }
-                else if (this.result.dept_no === 3) {
-                    this.result.dept_name = '개발3팀'
-                }
-                else if (this.result.dept_no === 4) {
-                    this.result.dept_name = '인사1팀'
-                }
-                else if (this.result.dept_no === 5) {
-                    this.result.dept_name = '인사2팀'
-                }
-                else if (this.result.dept_no === 6) {
-                    this.result.dept_name = '마케팅1팀'
-                }
-            },
-            immediate: true
-        }
-    },
-    created() {
-        this.getData()
-    },
-    methods: {
-        getData() {
-            axios.get('http://localhost:8085/empinsert')
-                .then((response) => {
-                    console.log(response)
-                    this.rank = response.data
-                })
-                .catch((error) => {
-                    console.log(error.response.data)
-                })
-        },
-        toggleDropdown() {
-            this.isOpen = !this.isOpen
-        },
-        save() {
-            if (this.result.em_userid == '') {
-                this.active.em_userid = true
-                this.placeholderText.em_userid = 'Userid is Required'
-            }
-            if (this.result.em_name == '') {
-                this.active.em_name = true
-                this.placeholderText.em_name = 'Name is Required'
-            }
-            if (this.result.em_phone == '') {
-                this.active.em_phone = true
-                this.placeholderText.em_phone = 'Enter Phone number'
-            }
-            if (this.result.em_password == '') {
-                this.active.em_password = true
-                this.placeholderText.em_password = 'Password is Required'
-            }
+    // watch(selectedRank, (newValue) => {
+    //   result.ranknum = newValue
+    //   if (result.ranknum === 1) {
+    //     result.em_position = '사장'
+    //   }
+    //   else if (result.ranknum === 2) {
+    //     result.em_position = '부장'
+    //   }
+    //   else if (result.ranknum === 3) {
+    //     result.em_position = '팀장'
+    //   }
+    //   else if (result.ranknum === 4) {
+    //     result.em_position = '대리'
+    //   }
+    //   else if (result.ranknum === 5) {
+    //     result.em_position = '사원'
+    //   }
+    // }, { immediate: true })
 
-            axios.post('http://localhost:8085/empinsert', this.result)
-                .then((response) => {
-                    console.log(response)
-                    console.log(response.data)
-                    console.log(response.config.data)
-                    this.$router.push({ name: 'EmployeeList' })
+    // watch(selectedDept, (newValue) => {
+    //   result.dept_no = newValue
+    //   if (result.dept_no === 1) {
+    //     result.dept_name = '개발1팀'
+    //   }
+    //   else if (result.dept_no === 2) {
+    //     result.dept_name = '개발2팀'
+    //   }
+    //   else if (result.dept_no === 3) {
+    //     result.dept_name = '개발3팀'
+    //   }
+    //   else if (result.dept_no === 4) {
+    //     result.dept_name = '인사1팀'
+    //   }
+    //   else if (result.dept_no === 5) {
+    //     result.dept_name = '인사2팀'
+    //   }
+    //   else if (result.dept_no === 6) {
+    //     result.dept_name = '마케팅1팀'
+    //   }
+    // }, { immediate: true })
 
-                })
-                .catch((error) => {
-                    console.log(error.response.data)
-                })
-        },
-        async getFileName(files) {
-            this.fileName = files[0]
-            console.log(this.fileName)
-            this.result.imgsrc = await this.base64(this.fileName)
-        },
-        base64(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader()
-                reader.onload = (e) => {
-                    resolve(e.target.result)
-                    console.log(e.target.result)
-                    const previewImage = document.getElementById('preview')
-                    previewImage.src = e.target.result
-                    this.result.em_pics = e.target.result
-                }
-                reader.readAsDataURL(file)
-            })
-        },
-        execPostcode() {
-            new daum.Postcode({
-                oncomplete: (data) => {
-                    let addr = ''
-                    let extraAddr = ''
+    // lifecycle hook
+    onMounted(() => {
+      employeeStore.getEmpInfo()
+      employeeStore.rankDeptStore()
+      console.log(employeeStore.rank)
+    })
 
-                    if (data.userSelectedType === 'R') {
-                        addr = data.roadAddress;
-                    } else {
-                        addr = data.jibunAddress;
-                    }
+    // methods
 
-                    if (data.userSelectedType === 'R') {
-                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                            extraAddr += data.bname;
-                        }
-                        if (data.buildingName !== '' && data.apartment === 'Y') {
-                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                        }
-                        if (extraAddr !== '') {
-                            extraAddr = ' (' + extraAddr + ')';
-                        }
-                    } else {
-                        extraAddr = '';
-                    }
-                    this.postcode = data.zonecode;
-                    this.result.em_address = addr;
-                    document.getElementById("em_location").focus();
-                }
-            }).open();
-        }
-
-
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value
     }
+
+    const save = async () => {
+      if (employeeStore.selectedEmployee.em_userid === '') {
+        active.em_userid = true
+        placeholderText.em_userid = 'Userid is Required'
+      }
+      if (employeeStore.selectedEmployee.em_name === '') {
+        active.em_name = true
+        placeholderText.em_name = 'Name is Required'
+      }
+      if (employeeStore.selectedEmployee.em_phone === '') {
+        active.em_phone = true
+        placeholderText.em_phone = 'Enter Phone number'
+      }
+      if (employeeStore.selectedEmployee.em_password === '') {
+        active.em_password = true
+        placeholderText.em_password = 'Password is Required'
+      }
+
+      employeeStore.insertEmp()
+    }
+
+    const getFileName = async (files) => {
+      const file = files[0]
+      const base64Data = await base64(file)
+      result.em_pics = base64Data
+      const previewImage = document.getElementById('preview')
+      previewImage.src = base64Data
+    }
+
+    const base64 = (file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          resolve(e.target.result)
+        }
+        reader.readAsDataURL(file)
+      })
+    }
+
+    const execPostcode = () => {
+      new daum.Postcode({
+        oncomplete: (data) => {
+          let addr = ''
+          let extraAddr = ''
+
+          if (data.userSelectedType === 'R') {
+            addr = data.roadAddress;
+          } else {
+            addr = data.jibunAddress;
+          }
+
+          if (data.userSelectedType === 'R') {
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              extraAddr += data.bname;
+            }
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            if (extraAddr !== '') {
+              extraAddr = ' (' + extraAddr + ')';
+            }
+          } else {
+            extraAddr = '';
+          }
+          postcode.value = data.zonecode;
+          result.em_address = addr;
+          document.getElementById("em_location").focus();
+        }
+      }).open();
+    }
+
+    return {
+      isOpen,
+      active,
+      placeholderText,
+      selectedRank,
+      selectedDept,
+      postcode,
+      toggleDropdown,
+      save,
+      getFileName,
+      base64,
+      execPostcode,
+      employeeStore
+    }
+  }
 }
 </script>
 

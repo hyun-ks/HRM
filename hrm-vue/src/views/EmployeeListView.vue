@@ -109,7 +109,7 @@
                 <ul class="ml-auto flex items-center">
                     <li class="mr-2">
                         <button type="button"
-                            class="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"><!--버튼클릭유무 확인활성화-->
+                            class="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -192,7 +192,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(row, index) in result" v-bind:key="row.em_userid"
+                                    <tr v-for="(row, index) in employeeStore.empResult" v-bind:key="row.em_userid"
                                         v-bind:class="{ 'bg-gray-100': index % 2 === 0 }">
                                         <td class="py-2 px-4 border-b border-b-gray-100">
                                             <div class="flex items-center justify-center">
@@ -268,60 +268,47 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { useEmployeeStore } from '../store/emp'
-import { storeToRefs } from 'pinia'
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
-    name: 'EmployeeList',
-    data() {
-        return {
-            isOpen: false,
-            result: [],
-            row : {
-                isChecked: false
-            }
-        }
-    },
-    created() {
-        this.getData()
-    },
-    methods: {
-        getData() {
-            axios
-                .get('http://localhost:8085/employeeList')
-                .then((response) => {
-                    console.log(response)
-                    this.result = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-        deleteRow() {
-            const Checkeduserid = this.result.filter(row => row.isChecked).map(row => row.em_userid)
-                axios.delete('http://localhost:8085/delete', {data: Checkeduserid})
-                    .then((response) => {
-                        this.result = this.result.filter(row => !row.isChecked)
-                        console.log(this.result)
-                        console.log(response)
-                    })
-                    .catch((error) => {
-                        console.log(error.response.data)
-                    })
-            },
-            toggleDropdown(){
-                this.isOpen = !this.isOpen
-            },
-            modify(index){
-                const selectedRow = this.result[index]
-                const employeeStore = useEmployeeStore()
-                employeeStore.selectEmployee(selectedRow)
+  name: 'EmployeeList',
+  setup() {
+    const isOpen = ref(false)
+    const row = reactive({
+      isChecked: false
+    })
+    const employeeStore = useEmployeeStore()
+    const router = useRouter()
 
-                console.log(employeeStore.selectedEmployee.em_name)
-  
-                this.$router.push({name: 'Employee'})
-            }
-        }
+    onMounted(() => {
+      employeeStore.getEmpInfo()
+      console.log(employeeStore.empResult)
+    })
+
+    const deleteRow = () => {
+        employeeStore.deleteEmp()
     }
+
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value
+    }
+
+    const modify = (index) => {
+      const selectedRow = employeeStore.empResult[index]
+      employeeStore.selectEmployee(selectedRow)
+      router.push({ name: 'Employee' })
+    }
+
+    return {
+      isOpen,
+      row,
+      deleteRow,
+      toggleDropdown,
+      modify,
+      employeeStore
+    }
+  }
+}
 </script>
