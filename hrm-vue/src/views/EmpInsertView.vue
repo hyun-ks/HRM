@@ -181,15 +181,15 @@
 
                     <div class="mt-2 flex flex-col">
                         <div class="flex items-center">
-                            <input type="text" id="postcode" v-model="postcode" placeholder="우편번호"
+                            <input type="text" id="postcode" v-model="postcode" placeholder="Postcode"
                                 class="p-2 rounded-lg w-full bg-gray-50 border ">
                             <input type="button" @click="execPostcode()" value="우편번호 찾기"
                                 class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
                         </div>
-                        <input type="text" id="em_address" v-model="employeeStore.selectedEmployee.em_address" placeholder="주소"
-                            class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
-                        <input type="text" id="em_location" v-model="employeeStore.selectedEmployee.em_location" placeholder="상세주소"
-                            class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
+                        <input type="text" id="em_address" v-model="employeeStore.selectedEmployee.em_address"
+                            placeholder="Address" class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
+                        <input type="text" id="em_location" v-model="employeeStore.selectedEmployee.em_location"
+                            placeholder="Detail_Address" class="p-2 rounded-lg mt-2 w-full bg-gray-50 border">
                     </div>
 
                     <div class="relative">
@@ -269,163 +269,171 @@
 
 <script>
 import { ref, reactive, watch, onMounted } from 'vue'
-import { useEmployeeStore } from '../store/emp' 
+import { useEmployeeStore } from '../store/emp'
+import { useRouter } from 'vue-router'
 
 export default {
-  setup() {
-    const employeeStore = useEmployeeStore()
-    const isOpen = ref(false)
-    const active = reactive({
-      em_userid: false, em_name: false, em_phone: false, em_address: false, em_password: false
-    })
-    const placeholderText = reactive({
-      em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
-      em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
-    })
-    const selectedRank = ref(1)
-    const selectedDept = ref(1)
-    const postcode = ref('')
+    name: 'EmpInsert',
+    setup() {
+        const employeeStore = useEmployeeStore()
+        const router = useRouter()
+        const isOpen = ref(false)
+        const active = reactive({
+            em_userid: false, em_name: false, em_phone: false, em_address: false, em_password: false
+        })
+        const placeholderText = reactive({
+            em_userid: 'Employee userid', em_name: 'Employee Name', em_birth: 'Employee birth',
+            em_phone: 'Phone Number', em_address: 'Employee address', em_password: 'Employee Password'
+        })
+        const selectedRank = ref(1)
+        const selectedDept = ref(1)
+        const postcode = ref('')
 
-    // watch(selectedRank, (newValue) => {
-    //   result.ranknum = newValue
-    //   if (result.ranknum === 1) {
-    //     result.em_position = '사장'
-    //   }
-    //   else if (result.ranknum === 2) {
-    //     result.em_position = '부장'
-    //   }
-    //   else if (result.ranknum === 3) {
-    //     result.em_position = '팀장'
-    //   }
-    //   else if (result.ranknum === 4) {
-    //     result.em_position = '대리'
-    //   }
-    //   else if (result.ranknum === 5) {
-    //     result.em_position = '사원'
-    //   }
-    // }, { immediate: true })
+        watch(selectedRank, (newValue) => {
+            employeeStore.selectedEmployee.ranknum = newValue
+            if (employeeStore.selectedEmployee.ranknum === 1) {
+                employeeStore.selectedEmployee.em_position = '사장'
+            }
+            else if (employeeStore.selectedEmployee.ranknum === 2) {
+                employeeStore.selectedEmployee.em_position = '부장'
+            }
+            else if (employeeStore.selectedEmployee.ranknum === 3) {
+                employeeStore.selectedEmployee.em_position = '팀장'
+            }
+            else if (employeeStore.selectedEmployee.ranknum === 4) {
+                employeeStore.selectedEmployee.em_position = '대리'
+            }
+            else if (employeeStore.selectedEmployee.ranknum === 5) {
+                employeeStore.selectedEmployee.em_position = '사원'
+            }
+        }, { immediate: true })
 
-    // watch(selectedDept, (newValue) => {
-    //   result.dept_no = newValue
-    //   if (result.dept_no === 1) {
-    //     result.dept_name = '개발1팀'
-    //   }
-    //   else if (result.dept_no === 2) {
-    //     result.dept_name = '개발2팀'
-    //   }
-    //   else if (result.dept_no === 3) {
-    //     result.dept_name = '개발3팀'
-    //   }
-    //   else if (result.dept_no === 4) {
-    //     result.dept_name = '인사1팀'
-    //   }
-    //   else if (result.dept_no === 5) {
-    //     result.dept_name = '인사2팀'
-    //   }
-    //   else if (result.dept_no === 6) {
-    //     result.dept_name = '마케팅1팀'
-    //   }
-    // }, { immediate: true })
+        watch(selectedDept, (newValue) => {
+            employeeStore.selectedEmployee.dept_no = newValue
+            if (employeeStore.selectedEmployee.dept_no === 1) {
+                employeeStore.selectedEmployee.dept_name = '개발1팀'
+            }
+            else if (employeeStore.selectedEmployee.dept_no === 2) {
+                employeeStore.selectedEmployee.dept_name = '개발2팀'
+            }
+            else if (employeeStore.selectedEmployee.dept_no === 3) {
+                employeeStore.selectedEmployee.dept_name = '개발3팀'
+            }
+            else if (employeeStore.selectedEmployee.dept_no === 4) {
+                employeeStore.selectedEmployee.dept_name = '인사1팀'
+            }
+            else if (employeeStore.selectedEmployee.dept_no === 5) {
+                employeeStore.selectedEmployee.dept_name = '인사2팀'
+            }
+            else if (employeeStore.selectedEmployee.dept_no === 6) {
+                employeeStore.selectedEmployee.dept_name = '마케팅1팀'
+            }
+        }, { immediate: true })
 
-    // lifecycle hook
-    onMounted(() => {
-      employeeStore.getEmpInfo()
-      employeeStore.rankDeptStore()
-      console.log(employeeStore.rank)
-    })
+        onMounted(() => {
+            employeeStore.getEmpInfo()
+            employeeStore.rankDeptStore()
+        })
 
-    // methods
-
-    const toggleDropdown = () => {
-      isOpen.value = !isOpen.value
-    }
-
-    const save = async () => {
-      if (employeeStore.selectedEmployee.em_userid === '') {
-        active.em_userid = true
-        placeholderText.em_userid = 'Userid is Required'
-      }
-      if (employeeStore.selectedEmployee.em_name === '') {
-        active.em_name = true
-        placeholderText.em_name = 'Name is Required'
-      }
-      if (employeeStore.selectedEmployee.em_phone === '') {
-        active.em_phone = true
-        placeholderText.em_phone = 'Enter Phone number'
-      }
-      if (employeeStore.selectedEmployee.em_password === '') {
-        active.em_password = true
-        placeholderText.em_password = 'Password is Required'
-      }
-
-      employeeStore.insertEmp()
-    }
-
-    const getFileName = async (files) => {
-      const file = files[0]
-      const base64Data = await base64(file)
-      result.em_pics = base64Data
-      const previewImage = document.getElementById('preview')
-      previewImage.src = base64Data
-    }
-
-    const base64 = (file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          resolve(e.target.result)
+        const toggleDropdown = () => {
+            isOpen.value = !isOpen.value
         }
-        reader.readAsDataURL(file)
-      })
-    }
 
-    const execPostcode = () => {
-      new daum.Postcode({
-        oncomplete: (data) => {
-          let addr = ''
-          let extraAddr = ''
+        const save = async () => {
+            if (employeeStore.selectedEmployee.em_userid === '') {
+                active.em_userid = true
+                placeholderText.em_userid = 'Userid is Required'
+            }
+            if (employeeStore.selectedEmployee.em_name === '') {
+                active.em_name = true
+                placeholderText.em_name = 'Name is Required'
+            }
+            if (employeeStore.selectedEmployee.em_phone === '') {
+                active.em_phone = true
+                placeholderText.em_phone = 'Enter Phone number'
+            }
+            if (employeeStore.selectedEmployee.em_password === '') {
+                active.em_password = true
+                placeholderText.em_password = 'Password is Required'
+            }
 
-          if (data.userSelectedType === 'R') {
-            addr = data.roadAddress;
-          } else {
-            addr = data.jibunAddress;
-          }
-
-          if (data.userSelectedType === 'R') {
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-              extraAddr += data.bname;
-            }
-            if (data.buildingName !== '' && data.apartment === 'Y') {
-              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            }
-            if (extraAddr !== '') {
-              extraAddr = ' (' + extraAddr + ')';
-            }
-          } else {
-            extraAddr = '';
-          }
-          postcode.value = data.zonecode;
-          result.em_address = addr;
-          document.getElementById("em_location").focus();
+            employeeStore.insertEmp()
+            router.push({ name: 'EmployeeList' })
         }
-      }).open();
-    }
 
-    return {
-      isOpen,
-      active,
-      placeholderText,
-      selectedRank,
-      selectedDept,
-      postcode,
-      toggleDropdown,
-      save,
-      getFileName,
-      base64,
-      execPostcode,
-      employeeStore
+        window.onbeforeunload = function (event) {
+            const confirmationMessage = '변경사항이 저장되지 않을 수 있습니다.'
+            event.preventDefault();
+            event.returnValue = confirmationMessage;
+            employeeStore.resetData()
+            return confirmationMessage;
+        }
+
+        const getFileName = async (files) => {
+            const file = files[0]
+            const base64Data = await base64(file)
+            employeeStore.selectedEmployee.em_pics = base64Data
+            const previewImage = document.getElementById('preview')
+            previewImage.src = base64Data
+        }
+
+        const base64 = (file) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    resolve(e.target.result)
+                }
+                reader.readAsDataURL(file)
+            })
+        }
+
+        const execPostcode = () => {
+            new daum.Postcode({
+                oncomplete: (data) => {
+                    let addr = ''
+                    let extraAddr = ''
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if (data.userSelectedType === 'R') {
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    } else {
+                        extraAddr = '';
+                    }
+                    postcode.value = data.zonecode;
+                    employeeStore.selectedEmployee.em_address = addr;
+                    document.getElementById("em_location").focus();
+                }
+            }).open();
+        }
+
+        return {
+            isOpen,
+            active,
+            placeholderText,
+            selectedRank,
+            selectedDept,
+            postcode,
+            toggleDropdown,
+            save,
+            getFileName,
+            base64,
+            execPostcode,
+            employeeStore
+        }
     }
-  }
 }
 </script>
 

@@ -25,7 +25,8 @@ public interface UserDao {
     + "values(#{em_userid}, #{dept_no}, #{dept_name}, #{em_position}, #{ranknum}, #{em_name}, #{em_birth}, #{em_gender}, #{em_pics}, #{em_phone}, #{em_address}, #{em_password}, #{em_location})")
     int insert(UserDto uDto);
 
-    @Update("update em_info set dept_no = #{dept_no}, ranknum = #{ranknum}, em_name = #{em_name}, em_birth = #{em_birth}, em_gender = #{em_gender}, em_phone = #{em_phone},em_address = #{em_address}, em_password = #{em_password} where em_userid = #{em_userid}")
+    @Update("update em_info set em_name = #{em_name}, em_password = #{em_password}, em_phone = #{em_phone}," + 
+     "em_birth = #{em_birth}, ranknum = #{ranknum}, dept_no = #{dept_no}, em_address = #{em_address}, em_location = #{em_location} where em_userid = #{em_userid}")
     int editByUserid(UserDto uDto);
 
     @Delete({

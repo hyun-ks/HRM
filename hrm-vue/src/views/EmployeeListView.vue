@@ -44,9 +44,9 @@
                                 class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Member</router-link>
                         </li>
                         <li class="mb-3">
-                            <router-link to="Empinsert"
+                            <button @click="empInsert"
                                 class="text-gray-300 text-sm flex items-center hover:text-white before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Employee
-                                Insert</router-link>
+                                Insert</button>
                         </li>
                     </ul>
                 </li>
@@ -287,6 +287,11 @@ export default {
       console.log(employeeStore.empResult)
     })
 
+    const empInsert = () => {
+        employeeStore.resetData()
+        router.push({ name: 'EmpInsert' })
+    }
+
     const deleteRow = () => {
         employeeStore.deleteEmp()
     }
@@ -307,7 +312,8 @@ export default {
       deleteRow,
       toggleDropdown,
       modify,
-      employeeStore
+      employeeStore,
+      empInsert
     }
   }
 }

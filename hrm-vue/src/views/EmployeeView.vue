@@ -139,27 +139,27 @@
                             <div class="flex flex-col items-center mb-4">
                                 <img :src="employeeStore.selectedEmployee.em_pics" alt="Profile Picture"
                                     class="w-24 h-24 rounded-full object-cover mb-3">
-                                <h2 class="text-xl font-semibold">{{ employeeStore.selectedEmployee.em_name }}</h2>
+                                <h2 class="text-xl font-semibold">{{ employeeStore.selectedEmployee.em_userid }}</h2>
                             </div>
                             <div class="bg-gray-100 rounded-md p-4">
                                 <div class="flex items-center justify-start border-t-2 py-2">
-                                    <label class="mr-10 text-lg">아이디</label>
-                                    <input type="text" name="em_userid" :value="employeeStore.selectedEmployee.em_userid"
+                                    <label class="mr-10 text-lg">이름</label>
+                                    <input type="text" name="em_name" v-model="employeeStore.selectedEmployee.em_name"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">비밀번호</label>
-                                    <input type="password" name="em_password" :value="employeeStore.selectedEmployee.em_password"
+                                    <input type="password" name="em_password" v-model="employeeStore.selectedEmployee.em_password"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">전화번호</label>
-                                    <input type="text" name="em_phone" :value="employeeStore.selectedEmployee.em_phone"
+                                    <input type="text" name="em_phone" v-model="employeeStore.selectedEmployee.em_phone"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
                                 <div class="flex items-center justify-start border-t-2 py-2">
                                     <label class="mr-5 text-lg">생년월일</label>
-                                    <input type="date" name="em_birthdate" :value="employeeStore.selectedEmployee.em_birth"
+                                    <input type="date" name="em_birthdate" v-model="employeeStore.selectedEmployee.em_birth"
                                         class="w-3/4 p-2 rounded-xl border bg-gray-50">
                                 </div>
 
@@ -170,13 +170,14 @@
                                         <input type="button" @click="execPostcode()" value="우편번호 찾기"
                                             class="p-2 rounded-lg ml-2 bg-gray-200 text-black hover:bg-gray-300 cursor-pointer">
                                     </div>
-                                    <input type="text" id="address" v-model="address" :placeholder="employeeStore.selectedEmployee.em_address"
+                                    <input type="text" id="em_address" v-model="employeeStore.selectedEmployee.em_address"
                                         class="p-2 rounded-lg mt-2 w-full">
-                                    <input type="text" id="detailAddress" v-model="detailAddress" :placeholder="employeeStore.selectedEmployee.em_location"
+                                    <input type="text" id="em_location" v-model="employeeStore.selectedEmployee.em_location"
                                         class="p-2 rounded-lg mt-2 w-full">
                                 </div>
 
-                                <div class="form-group mb-2">
+                                
+                                <div class="form-group mb-2 mt-3">
                                     <label for="rank" class="mr-2">Position:</label>
                                     <select id="rank" name="rank" class="border-2" v-model="selectedRank">
                                         <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
@@ -216,10 +217,11 @@
 <script>
 import { useRouter } from 'vue-router'
 import { useEmployeeStore } from '../store/emp'
-import { ref, watch } from 'vue'
+import { ref, watch} from 'vue'
 export default {
   name: 'Employee',
-  setup() {
+  setup() { 
+    const employeeStore = useEmployeeStore()
     const isOpen = ref(false)
     const postcode = ref('')
     const address = ref('')
@@ -231,47 +233,46 @@ export default {
     const em_phone = ref('')
     const em_address = ref('')
     const em_location = ref('')
-    const selectedRank = ref('1')
-    const selectedDept = ref('1')
+    const selectedRank = ref(employeeStore.selectedEmployee.ranknum)
+    const selectedDept = ref(employeeStore.selectedEmployee.dept_no)
     const router = useRouter()
-    const employeeStore = useEmployeeStore()
 
-    // watch(selectedRank, (newValue) => {
-    //   rankdeptStore.rank.ranknum = newValue;
-    //   if (rankdeptStore.rank.ranknum  === 1) {
-    //     rankdeptStore.rank.em_position = '사장'
-    //   } else if (rankdeptStore.rank.ranknum === 2) {
-    //     rankdeptStore.rank.em_position = '부장'
-    //   } else if (rankdeptStore.rank.ranknum === 3) {
-    //     rankdeptStore.rank.em_position = '팀장'
-    //   } else if (rankdeptStore.rank.ranknum === 4) {
-    //     rankdeptStore.rank.em_position = '대리'
-    //   } else if (rankdeptStore.rank.ranknum === 5) {
-    //     rankdeptStore.rank.em_position = '사원'
-    //   }
-    // }, { immediate: true });
+    watch(selectedRank, (newValue) => {
+      employeeStore.rank.ranknum = newValue;
+      if (employeeStore.rank.ranknum  === 1) {
+        employeeStore.rank.em_position = '사장'
+      } else if (employeeStore.rank.ranknum === 2) {
+        employeeStore.rank.em_position = '부장'
+      } else if (employeeStore.rank.ranknum === 3) {
+        employeeStore.rank.em_position = '팀장'
+      } else if (employeeStore.rank.ranknum === 4) {
+        employeeStore.rank.em_position = '대리'
+      } else if (employeeStore.rank.ranknum === 5) {
+        employeeStore.rank.em_position = '사원'
+      }
+    }, { immediate: true });
 
-    // watch(selectedDept, (newValue) => {
-    //     rankdeptStore.rank.dept_no = newValue;
-    //   if (rankdeptStore.rank.dept_no === 1) {
-    //     rankdeptStore.rank.dept_name = '개발1팀'
-    //   } else if (rankdeptStore.rank.dept_no === 2) {
-    //     rankdeptStore.rank.dept_name = '개발2팀'
-    //   } else if (rankdeptStore.rank.dept_no === 3) {
-    //     rankdeptStore.rank.dept_name = '개발3팀'
-    //   } else if (rankdeptStore.rank.dept_no === 4) {
-    //     rankdeptStore.rank.dept_name = '인사1팀'
-    //   } else if (rankdeptStore.rank.dept_no === 5) {
-    //     rankdeptStore.rank.dept_name = '인사2팀'
-    //   } else if (rankdeptStore.rank.dept_no === 6) {
-    //     rankdeptStore.rank.dept_name = '마케팅1팀'
-    //   }
-    // }, { immediate: true });
+    watch(selectedDept, (newValue) => {
+        employeeStore.rank.dept_no = newValue;
+      if (employeeStore.rank.dept_no === 1) {
+        employeeStore.rank.dept_name = '개발1팀'
+      } else if (employeeStore.rank.dept_no === 2) {
+        employeeStore.rank.dept_name = '개발2팀'
+      } else if (employeeStore.rank.dept_no === 3) {
+        employeeStore.rank.dept_name = '개발3팀'
+      } else if (employeeStore.rank.dept_no === 4) {
+        employeeStore.rank.dept_name = '인사1팀'
+      } else if (employeeStore.rank.dept_no === 5) {
+        employeeStore.rank.dept_name = '인사2팀'
+      } else if (employeeStore.rank.dept_no === 6) {
+        employeeStore.rank.dept_name = '마케팅1팀'
+      }
+    }, { immediate: true });
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value
-      console.log(employeeStore.selectedEmployee.em_address)
       console.log(employeeStore.selectedEmployee)
+      console.log(employeeStore.rank)
     }
 
     const execPostcode = () => {
@@ -300,14 +301,15 @@ export default {
             extraAddr = ''
           }
           postcode.value = data.zonecode
-          address.value = addr
-          detailAddress.value = extraAddr
-          document.getElementById("detailAddress").focus()
+          employeeStore.selectedEmployee.em_address = addr
+          employeeStore.selectedEmployee.em_location = extraAddr
+          document.getElementById("em_location").focus()
         }
       }).open()
     }
 
     const update = () => {
+        employeeStore.updateEmp()
         router.push({name: 'EmployeeList'})
 
     }
@@ -330,6 +332,7 @@ export default {
       selectedRank,
       em_address,
       em_location
+
     }
   }
 }
