@@ -1,11 +1,11 @@
 package com.example.hrm.service;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hrm.dao.UserDao;
-// import com.example.hrm.dto.RankDto;
 import com.example.hrm.dto.UserDto;
 
 @Service
@@ -29,5 +29,9 @@ public class UserService {
 
     public int delete(List<String> em_userid){
         return uDao.delete(em_userid);
+    }
+
+    public Map<String, String> login(UserDto uDto){
+        return uDao.login(uDto);
     }
 }

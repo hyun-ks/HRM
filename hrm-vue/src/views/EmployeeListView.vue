@@ -284,7 +284,6 @@ export default {
 
     onMounted(() => {
       employeeStore.getEmpInfo()
-      console.log(employeeStore.empResult)
     })
 
     const empInsert = () => {
@@ -298,6 +297,7 @@ export default {
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value
+      console.log(employeeStore.empResult)
     }
 
     const modify = (index) => {

@@ -20,7 +20,7 @@ export const useEmployeeStore = defineStore('employee', {
     },
     rank: [],
     updatedData: [],
-    empResult: []
+    empResult: [],
   }),
   actions: {
     selectEmployee(data) {
@@ -70,7 +70,7 @@ export const useEmployeeStore = defineStore('employee', {
         const response = await axios.post('http://localhost:8085/empinsert', this.selectedEmployee)
         console.log(response)
       } catch (error) {
-        console.log(error.response.data)
+        console.log(error)
       }
     },
 
@@ -91,5 +91,27 @@ export const useEmployeeStore = defineStore('employee', {
       }
     }
   },
+  persist: true
+})
+
+export const useLoginStore = defineStore('loginStore', {
+  state: () => ({
+    loginData: {
+      em_userid: '',
+      em_password: ''
+    }
+  }),
+  actions: {
+    LoginCheck: async () => {
+      const loginStore = useLoginStore()
+      try {
+        const response = await axios.post('http://localhost:8085', loginStore.loginData)
+        console.log(response)
+      } catch(error){
+        console.log(error.response.data)
+      }
+    }
+  },
+
   persist: true
 })

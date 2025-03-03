@@ -234,7 +234,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="mb-2 mr-2">
                         <label for="rank" class="mr-2">Position:</label>
                         <select id="rank" name="rank" class="border-2" v-model="selectedRank">
                             <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
@@ -243,7 +243,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="mb-2">
                         <label for="dept" class="mr-2">Dept:</label>
                         <select id="dept" name="dept" class="border-2" v-model="selectedDept">
                             <option v-for="row in employeeStore.rank" :key="row.no" :value="row.no">
@@ -333,6 +333,7 @@ export default {
         onMounted(() => {
             employeeStore.getEmpInfo()
             employeeStore.rankDeptStore()
+            console.log(employeeStore.selectedEmployee)
         })
 
         const toggleDropdown = () => {
@@ -340,33 +341,34 @@ export default {
         }
 
         const save = async () => {
+            let Blank = true
+
             if (employeeStore.selectedEmployee.em_userid === '') {
                 active.em_userid = true
                 placeholderText.em_userid = 'Userid is Required'
+                Blank = false
             }
             if (employeeStore.selectedEmployee.em_name === '') {
                 active.em_name = true
                 placeholderText.em_name = 'Name is Required'
+                Blank = false
             }
             if (employeeStore.selectedEmployee.em_phone === '') {
                 active.em_phone = true
                 placeholderText.em_phone = 'Enter Phone number'
+                Blank = false
             }
             if (employeeStore.selectedEmployee.em_password === '') {
                 active.em_password = true
                 placeholderText.em_password = 'Password is Required'
+                Blank = false
             }
 
+            if(Blank){
             employeeStore.insertEmp()
             router.push({ name: 'EmployeeList' })
-        }
-
-        window.onbeforeunload = function (event) {
-            const confirmationMessage = '변경사항이 저장되지 않을 수 있습니다.'
-            event.preventDefault();
-            event.returnValue = confirmationMessage;
-            employeeStore.resetData()
-            return confirmationMessage;
+            }
+            
         }
 
         const getFileName = async (files) => {

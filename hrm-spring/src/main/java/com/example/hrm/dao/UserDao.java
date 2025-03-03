@@ -1,6 +1,7 @@
 package com.example.hrm.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -9,7 +10,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-// import com.example.hrm.dto.RankDto;
 import com.example.hrm.dto.UserDto;
 
 @Mapper
@@ -38,4 +38,7 @@ public interface UserDao {
         "</script>"
     })
     int delete(@Param("list") List<String> em_userid);
+
+    @Select("select em_userid, em_password from em_info where em_userid = #{em_userid} and em_password = #{em_password}")
+    Map<String, String> login(UserDto uDto);
 }

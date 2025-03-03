@@ -7,6 +7,7 @@ import com.example.hrm.dto.UserDto;
 import com.example.hrm.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,6 +52,12 @@ public class DataController {
     public int delete(@RequestBody List<String> em_userid){
         return uService.delete(em_userid);
     }
+
+    @PostMapping("/")
+    public Map<String, String> loginCheck(@RequestBody UserDto uDto) {
+        return uService.login(uDto);
+    }
+    
     
     
     
