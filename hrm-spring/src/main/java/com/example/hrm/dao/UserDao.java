@@ -1,7 +1,6 @@
 package com.example.hrm.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -39,6 +38,6 @@ public interface UserDao {
     })
     int delete(@Param("list") List<String> em_userid);
 
-    @Select("select em_userid, em_password from em_info where em_userid = #{em_userid} and em_password = #{em_password}")
-    Map<String, String> login(UserDto uDto);
+    @Select("select em_password from em_info where em_userid = #{em_userid}")
+    String login(String em_userid);
 }

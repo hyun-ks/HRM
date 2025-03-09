@@ -105,7 +105,7 @@ export const useLoginStore = defineStore('loginStore', {
     LoginCheck: async () => {
       const loginStore = useLoginStore()
       try {
-        const response = await axios.post('http://localhost:8085', loginStore.loginData)
+        const response = await axios.post('http://localhost:8085', loginStore.loginData, { withCredentials: true })
         console.log(response)
       } catch(error){
         console.log(error.response.data)

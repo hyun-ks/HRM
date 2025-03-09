@@ -31,7 +31,7 @@ public class UserService {
         return uDao.delete(em_userid);
     }
 
-    public Map<String, String> login(UserDto uDto){
-        return uDao.login(uDto);
+    public String login(String em_userid){
+        return uDao.login(em_userid);
     }
 }
